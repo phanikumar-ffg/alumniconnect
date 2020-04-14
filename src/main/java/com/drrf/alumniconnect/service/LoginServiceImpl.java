@@ -4,7 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.drrf.alumniconnect.dao.LoginDao;
+import com.drrf.alumniconnect.exceptions.UserNotFoundDaoException;
+import com.drrf.alumniconnect.model.LoginDetails;
 import com.drrf.alumniconnect.model.UserDetails;
+import com.drrf.alumniconnect.model.UserProfile;
 
 @Service
 public class LoginServiceImpl implements LoginService {
@@ -12,8 +15,7 @@ public class LoginServiceImpl implements LoginService {
 	LoginDao loginDao;
 
 	@Override
-	public UserDetails getUserDetails(UserDetails user) {
-			
+	public UserProfile getUserDetails(LoginDetails user) throws UserNotFoundDaoException{
 		return loginDao.getUserDetails(user);
 	}
 
