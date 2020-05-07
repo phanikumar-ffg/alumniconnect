@@ -1,15 +1,13 @@
 package com.drrf.alumniconnect.model;
-import java.sql.Timestamp;
 public class JobInformation {
 
 	private long jobId;
 	private String companyName;
-	private String designation;
+	private String role;
 	private String jobDescription;
-	private long cityId;
-	private long vacancyCount;
-	private String qualificationReq;
-	private Timestamp createDate;
+	private String city;
+	private String state;
+	private String salaryScale;
 	
 	public long getJobId() {
 		return jobId;
@@ -23,11 +21,11 @@ public class JobInformation {
 	public void setCompanyName(String companyName) {
 		this.companyName = companyName;
 	}
-	public String getDesignation() {
-		return designation;
+	public String getRole() {
+		return role;
 	}
-	public void setDesignation(String designation) {
-		this.designation = designation;
+	public void setRole(String role) {
+		this.role = role;
 	}
 	public String getJobDescription() {
 		return jobDescription;
@@ -35,29 +33,23 @@ public class JobInformation {
 	public void setJobDescription(String jobDescription) {
 		this.jobDescription = jobDescription;
 	}
-	public long getCityId() {
-		return cityId;
+	public String getCity() {
+		return city;
 	}
-	public void setCityId(long cityId) {
-		this.cityId = cityId;
+	public void setCity(String city) {
+		this.city = city;
 	}
-	public long getVacancyCount() {
-		return vacancyCount;
+	public String getState() {
+		return state;
 	}
-	public void setVacancyCount(long vacancyCount) {
-		this.vacancyCount = vacancyCount;
+	public void setState(String state) {
+		this.state = state;
 	}
-	public String getQualificationReq() {
-		return qualificationReq;
+	public String getSalaryScale() {
+		return salaryScale;
 	}
-	public void setQualificationReq(String qualificationReq) {
-		this.qualificationReq = qualificationReq;
-	}
-	public Timestamp getCreateDate() {
-		return createDate;
-	}
-	public void setCreateDate(Timestamp createDate) {
-		this.createDate = createDate;
+	public void setSalaryScale(String salaryScale) {
+		this.salaryScale = salaryScale;
 	}
 	
 	
