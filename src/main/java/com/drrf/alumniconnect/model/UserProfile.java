@@ -1,7 +1,13 @@
 package com.drrf.alumniconnect.model;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.relational.core.mapping.Table;
+
 import java.util.Date;
+
+@Table
 public class UserProfile {
-	
+	@Id
 	private long studentId;
 	private String firstName;
 	private String lastName;
@@ -13,6 +19,7 @@ public class UserProfile {
 	private Date dob;
 	private Date createDate;
 	private Date updateDate;
+
 	
 	
 	
@@ -82,7 +89,8 @@ public class UserProfile {
 	public void setUpdateDate(Date updateDate) {
 		this.updateDate = updateDate;
 	}
-	
+
+
 	@Override
 	public String toString() {
 		return "UserProfile [firstName=" + firstName + ", lastName=" + lastName + ", mobile=" + mobile + ", email="

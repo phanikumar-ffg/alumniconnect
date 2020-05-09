@@ -3,6 +3,7 @@ package com.drrf.alumniconnect.model;
 import java.sql.Timestamp;
 public class LoginDetails {
 
+
 	private Long studentId;
 	private String userName;
 	private String password;

@@ -5,6 +5,8 @@ import javax.mail.AuthenticationFailedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -33,12 +35,13 @@ public class ForgotPasswordDaoImpl implements ForgotPasswordDao {
 		String message = "";
 
 		try {
-			String sql = "SELECT student_id,username,password,create_timestamp,update_timestamp FROM tbl_login_details where username = ?";
+			String sql = "SELECT student_id,username,password FROM tbl_login_details where username = 'pransamkumar@gmail.com'";
 
-			loginDetails = jdbcTemplate.queryForObject(sql, new Object[]{email}, new LoginDetailsRowMapper());
+			loginDetails = (LoginDetails) jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper(LoginDetails.class));
+			System.out.println("---------------------"+loginDetails+"---------------------");
 
 			/*//for list
-			 * jdbcTemplate.query(sql, new RowCallbackHandler() { public void
+			 * jdbcTemplate.query(sql, new RowCallbackHandler() { public void2
 			 * processRow(ResultSet resultSet) throws SQLException { while
 			 * (resultSet.next()) {
 			 * loginDetails.setStudentId(resultSet.getLong("student_id"));
@@ -68,7 +71,7 @@ public class ForgotPasswordDaoImpl implements ForgotPasswordDao {
 			}
 		} catch (ForgotPasswordDaoException e) {
 			throw e;
-		}catch(Exception e) {
+		} catch(Exception e) {
 			logger.error(e.getLocalizedMessage(),e);
 			throw new ForgotPasswordDaoException( "Error occured while checking the user account information" +  email);
 		}

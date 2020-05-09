@@ -17,8 +17,8 @@ public class LoginDetailsRowMapper implements RowMapper<LoginDetails> {
 		 loginDetails.setStudentId(resultSet.getLong("student_id"));
 		 loginDetails.setUserName(resultSet.getString("username"));
 		 loginDetails.setPassword(resultSet.getString("password"));
-		 loginDetails.setCreateDate(resultSet.getTimestamp("create_timestamp"));
-		 loginDetails.setUpdateDate(resultSet.getTimestamp("update_timestamp"));
+//		 loginDetails.setCreateDate(resultSet.getTimestamp("create_timestamp"));
+//		 loginDetails.setUpdateDate(resultSet.getTimestamp("update_timestamp"));
 	        return loginDetails;
 	}
 

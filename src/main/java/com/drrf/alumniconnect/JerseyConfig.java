@@ -1,5 +1,6 @@
 package com.drrf.alumniconnect;
 
+import com.drrf.alumniconnect.controller.AdminHelpController;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +14,7 @@ public class JerseyConfig extends ResourceConfig {
 		
 		register(LoginController.class);
 		register(ForgotPasswordController.class);
+		register(AdminHelpController.class);
 	}
 
 }
