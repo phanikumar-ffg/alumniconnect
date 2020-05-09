@@ -9,6 +9,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import com.drrf.alumniconnect.exceptions.JobInformationDaoException;
+import com.drrf.alumniconnect.model.JobInformation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -59,5 +61,20 @@ public class JobInformationController {
 			return Response.status(Status.BAD_REQUEST).entity(error.toString()).build();
 		}
 
+	}
+
+
+	@POST
+	@Path("/saveJobInfo")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response saveJobEntryDetails(@RequestBody JobInformation jobInformation) throws JobInformationDaoException {
+		try {
+			return Response.ok().entity(JobInfoService.saveJobEntryDetails(jobInformation)).build();
+		} catch (JobInformationDaoException e) {
+			JsonObject error = new JsonObject();
+			error.addProperty(APIUtils.ERROR_MESSAGE, e.getLocalizedMessage());
+			return Response.status(Response.Status.BAD_REQUEST).entity(error.toString()).build();
+		}
 	}
 }

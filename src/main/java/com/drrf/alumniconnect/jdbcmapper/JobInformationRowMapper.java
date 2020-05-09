@@ -10,16 +10,17 @@ public class JobInformationRowMapper implements RowMapper<JobInformation> {
 
 	@Override
 	public JobInformation mapRow(ResultSet resultSet, int rowNum) throws SQLException {
-		
+
 		 JobInformation jobs = new JobInformation();
-		 
+
 		 jobs.setJobId(resultSet.getLong("jobid"));
 		 jobs.setCompanyName(resultSet.getString("companyName"));
-		 jobs.setRole(resultSet.getString("role"));
 		 jobs.setJobDescription(resultSet.getString("jobDescription"));
-         jobs.setCity(resultSet.getString("city"));
-         jobs.setState(resultSet.getString("state"));
-         jobs.setSalaryScale(resultSet.getString("salaryScale"));
+		 jobs.setDesignation(resultSet.getString("DESIGNATION"));
+		 jobs.setCityId(resultSet.getLong("CITY_ID"));
+		 jobs.setVacancyCount(resultSet.getLong("VACANCY_COUNT"));
+		 jobs.setQualificationReq(resultSet.getString("QUALIFICATION_REQ"));
+		 jobs.setCreateDate(resultSet.getTimestamp("CREATE_TIMESTAMP"));
            
          return jobs;
 	}

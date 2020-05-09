@@ -8,6 +8,7 @@ public class HelpHistory {
 	private String details;
 	private String centerId;
 	private Timestamp createDate;
+	private String description;
 	
 	public long getStudentId() {
 		return studentId;
@@ -39,6 +40,12 @@ public class HelpHistory {
 	public void setCreateDate(Timestamp createDate) {
 		this.createDate = createDate;
 	}
-	
-	
+	public String getDescription() { return description; }
+	public void setDescription(String description) { this.description = description; }
+
+	@Override
+	public String toString() {
+		return "HelpHistory [studentId=" + studentId + ", reason=" + reason + ", details=" + details + ", centerId="
+				+ centerId + ", createDate=" + createDate + ", description=" + description + "]";
+	}
 }
