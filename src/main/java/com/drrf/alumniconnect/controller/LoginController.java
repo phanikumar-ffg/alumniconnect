@@ -32,15 +32,15 @@ public class LoginController {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getApplicationRunStatus() {
 		logger.info("Received request for api status");
-		JsonObject respons=new JsonObject();
+		JsonObject response=new JsonObject();
 		try {
-			respons.addProperty("api", "Dr Reddy Alumni Connect API");
-			respons.addProperty("status", "Up and Running");
-			return Response.ok().entity(respons.toString()).build();
-		} catch (Exception e) {	
-			respons.addProperty("api", "Dr Reddy Alumni Connect API");
-			respons.addProperty("status", "Error Not Running.");
-			return Response.serverError().entity(respons.toString()).build();
+			response.addProperty("api", "Dr Reddy Alumni Connect API");
+			response.addProperty("status", "Up and Running");
+			return Response.ok().entity(response.toString()).build();
+		} catch (Exception e) {
+			response.addProperty("api", "Dr Reddy Alumni Connect API");
+			response.addProperty("status", "Error Not Running.");
+			return Response.serverError().entity(response.toString()).build();
 		}
 
 	}
