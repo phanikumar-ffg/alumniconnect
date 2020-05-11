@@ -13,14 +13,11 @@ public class JobInformationRowMapper implements RowMapper<JobInformation> {
 
 		 JobInformation jobs = new JobInformation();
 
-		 jobs.setJobId(resultSet.getLong("jobid"));
-		 jobs.setCompanyName(resultSet.getString("companyName"));
-		 jobs.setJobDescription(resultSet.getString("jobDescription"));
+		 jobs.setJobId(resultSet.getLong("JOB_ID"));
+		 jobs.setCompanyName(resultSet.getString("COMPANY_NAME"));
+		 jobs.setJobDescription(resultSet.getString("JOB_DESCRIPTION"));
 		 jobs.setDesignation(resultSet.getString("DESIGNATION"));
-		 jobs.setCityId(resultSet.getLong("CITY_ID"));
-		 jobs.setVacancyCount(resultSet.getLong("VACANCY_COUNT"));
-		 jobs.setQualificationReq(resultSet.getString("QUALIFICATION_REQ"));
-		 jobs.setCreateDate(resultSet.getTimestamp("CREATE_TIMESTAMP"));
+		 jobs.setCity(resultSet.getString("CITY"));
            
          return jobs;
 	}

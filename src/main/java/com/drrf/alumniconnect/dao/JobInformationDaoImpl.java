@@ -26,7 +26,7 @@ public class JobInformationDaoImpl implements JobInformationDao{
 		List<JobInformation> jobs = null;
 
         try {
-            final String get_all_jobs = "SELECT * FROM tbl_job_information";
+            final String get_all_jobs = "select tbl_job_information.JOB_ID, tbl_job_information.COMPANY_NAME, tbl_job_information.DESIGNATION, tbl_job_information.JOB_DESCRIPTION, tbl_city_details.CITY from tbl_job_information INNER Join tbl_city_details on tbl_job_information.CITY_ID = tbl_city_details.CITY_ID";
 
             jobs = jdbcTemplate.query(get_all_jobs, new JobInformationRowMapper());
 
