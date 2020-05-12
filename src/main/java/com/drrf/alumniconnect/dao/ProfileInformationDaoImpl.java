@@ -9,7 +9,8 @@ import com.drrf.alumniconnect.model.UserProfile;
 import com.drrf.alumniconnect.model.Mail;
 import com.drrf.alumniconnect.service.MailService;
 import com.drrf.alumniconnect.utils.APIUtils;
- 
+import com.drrf.alumniconnect.jdbcmapper.UserProfileRowMapper;
+
 @Repository
 public class ProfileInformationDaoImpl implements ProfileInformationDao {
 	private static final Logger logger = LoggerFactory.getLogger(ProfileInformationDaoImpl.class);
@@ -20,9 +21,8 @@ public class ProfileInformationDaoImpl implements ProfileInformationDao {
 
         try {
 			// TODO Change table name
-            final String get_all_profiles = "SELECT * FROM tbl_profile_information";
-
-            userProfile = jdbcTemplate.query(get_all_profiles, new ProfileInformationRowMapper());
+            final String get_all_profiles = "SELECT * FROM tbl_profile_data";
+            userProfile = jdbcTemplate.query(get_all_profiles, new UserProfileRowMapper());
 
         } catch (Exception e) {
             logger.error(e.getLocalizedMessage(),e);
@@ -41,7 +41,7 @@ public class ProfileInformationDaoImpl implements ProfileInformationDao {
 	public UserProfile saveProfileDetails(UserProfile userProfile){
 	try {
 		// TODO- change table Name and column names
-			String sql = "INSERT INTO tbl_profile_information (studentId,firstName,lastName,mobile,email,address,cityId,centerId,dob,createDate,updateDate) 
+			String sql = "INSERT INTO tbl_profile_data (studentId,firstName,lastName,mobile,email,address,cityId,centerId,dob,createDate,updateDate) 
 			VALUES ('" + userProfile.getStudentId() + "','" + userProfile.getFirstName() +"','" + userProfile.getLastName() + "','" + jobInformation.getMobile() + "',
 			'" + userProfile.getEmail() + "','" + userProfile.getAddress() + "','"+ userProfile.getCityId() +"','"+ userProfile.getCenterId() +"',
 			'"+ userProfile.getDob() +"','"+ userProfile.getCreateDate() +"','"+ userProfile.getUpdateDate() +"')";
