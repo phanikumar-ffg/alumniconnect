@@ -7,13 +7,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import sun.net.www.protocol.http.HttpURLConnection;
+import org.springframework.stereotype.Repository;
+
 
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.sql.Timestamp;
 import java.util.Calendar;
 
+@Repository
 public class ContentRequestDaoImpl implements ContentRequestDao {
     private static final Logger logger = LoggerFactory.getLogger(ContentManagementDaoImpl.class);
     @Autowired
@@ -24,8 +27,8 @@ public class ContentRequestDaoImpl implements ContentRequestDao {
     @Override
     public String sendContentRequest(ContentManagement contentManagement) throws CannotGetJdbcConnectionException {
         try {
-            if ((!(contentManagement.getContentURL() == null && contentManagement.getContentTitle() == null))&& checkURL(contentManagement.getContentURL())){
-                logger.info("Inserting a nw content with Content Title [%s] and URl [%s] at time [%s]", contentManagement.getContentTitle(), contentManagement.getContentURL(), timestamp);
+            if ((!(contentManagement.getContentURL().isEmpty() || contentManagement.getContentTitle().isEmpty()) && checkURL(contentManagement.getContentURL()))){
+                logger.info("Inserting a new content with Content Title {} and URl {} at time {}", contentManagement.getContentTitle(), contentManagement.getContentURL(), timestamp);
                 contentManagement.setCreateDate(timestamp);
                 String sql = "INSERT INTO TBL_CONTENT_MANAGEMENT (CONTENT_ID,CONTENT_URL,CONTENT_TITLE,CONTENT_DESC,CREATE_TIMESTAMP) VALUES ('" + contentManagement.getContentId()
                         + "','" + contentManagement.getContentURL() + "','" + contentManagement.getContentTitle() + "','" + contentManagement.getContentDesc() + "','" + contentManagement.getCreateDate() + "')";
@@ -38,9 +41,9 @@ public class ContentRequestDaoImpl implements ContentRequestDao {
                     return "Request saved to database successfully";
                 }
             } else {
-                if((contentManagement.getContentURL() == null && contentManagement.getContentTitle() == null))
+                if((contentManagement.getContentURL().isEmpty()  || contentManagement.getContentTitle().isEmpty()))
                     return "Error occurred: Cannot save the content with no Title or URL";
-                else if (checkURL(contentManagement.getContentURL()))
+                else if (!checkURL(contentManagement.getContentURL()))
                     return "Error occurred: URL is invalid, Please check";
                 else
                     return "Error Occurred";
