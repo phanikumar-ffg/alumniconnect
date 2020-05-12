@@ -7,4 +7,5 @@ public interface ProfileInformationService {
 
 	public UserProfile getProfileInfo(String input) throws Exception;
 	public void updateProfileInfo(UserProfile userProfile) throws Exception;
+	public UserProfile saveProfileDetails(UserProfile userProfile) throws Exception;
 }

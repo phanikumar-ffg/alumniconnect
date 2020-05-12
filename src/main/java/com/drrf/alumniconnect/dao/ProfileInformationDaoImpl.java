@@ -37,4 +37,29 @@ public class ProfileInformationDaoImpl implements ProfileInformationDao {
 		// TODO - How to save the data to DB ?
 	}
 
+	@Override
+	public UserProfile saveProfileDetails(UserProfile userProfile){
+	try {
+		// TODO- change table Name and column names
+			String sql = "INSERT INTO tbl_profile_information (studentId,firstName,lastName,mobile,email,address,cityId,centerId,dob,createDate,updateDate) 
+			VALUES ('" + userProfile.getStudentId() + "','" + userProfile.getFirstName() +"','" + userProfile.getLastName() + "','" + jobInformation.getMobile() + "',
+			'" + userProfile.getEmail() + "','" + userProfile.getAddress() + "','"+ userProfile.getCityId() +"','"+ userProfile.getCenterId() +"',
+			'"+ userProfile.getDob() +"','"+ userProfile.getCreateDate() +"','"+ userProfile.getUpdateDate() +"')";
+			int i = jdbcTemplate.update(sql);
+			if(i==0){
+				throw new UserProfileInformationDaoException("Error occurred while saving Profile Info"+userProfile.getStudentId());
+			}
+			else {
+				return "success";
+			}
+		}
+		catch (UserProfileInformationDaoException e) {
+			throw e;
+		}
+		catch(Exception e){
+			logger.error(e.getLocalizedMessage(),e);
+			throw new UserProfileInformationDaoException( "Error occured while saving Profile Info" +userProfile.getStudentId());
+		}
+	}
+
 }

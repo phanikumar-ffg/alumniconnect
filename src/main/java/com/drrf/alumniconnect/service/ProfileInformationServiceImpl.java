@@ -22,4 +22,9 @@ public class ProfileInformationServiceImpl implements ProfileInformationService 
 		return ProfileInformationDao.updateProfileInfo(userProfile);
 	}
 
+	@Override
+	public UserProfile saveProfileDetails(UserProfile userProfile) throws Exception{
+		return ProfileInformationDao.saveProfileDetails(userProfile);
+	}
+
 }

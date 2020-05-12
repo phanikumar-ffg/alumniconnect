@@ -40,17 +40,28 @@ public class ProfileInformationController {
 
 	}
 
-	@GET
+	@PUT
 	@Path("/profileUpdate")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response getProfileInfo(@RequestBody UserProfile userProfile) { 
+	public Response updateProfileInfo(@RequestBody UserProfile userProfile) { 
 		logger.info("Received request for Profile");
 		try {
 			return Response.ok().entity(profileInformationService.updateProfileInfo(userProfile)).build();
 		} catch (Exception e) {	
 			return Response.status(Status.BAD_REQUEST).entity("error").build();
 		}
+	}
 
+	@POST
+	@Path("/saveProfileInfo")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response saveProfileDetails(@RequestBody UserProfile userProfile) {
+		try {
+			return Response.ok().entity(profileInformationService.saveProfileDetails(userProfile)).build();
+		} catch (Exception e) {
+				return Response.status(Status.BAD_REQUEST).entity("error").build();
+		}
 	}
 }

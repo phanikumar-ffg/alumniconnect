@@ -6,5 +6,5 @@ public interface ProfileInformationDao {
 
     public UserProfile getProfileInfo(String input);
     public UserProfile updateProfileInfo(UserProfile userProfile);
-
+    public UserProfile saveProfileDetails(UserProfile userProfile);
 }
