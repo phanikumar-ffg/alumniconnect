@@ -17,7 +17,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 	RegistrationDao dao;
 
 	@Override
-	public String newUserRegistration(UserProfile userProfile) throws ForgotPasswordDaoException, AuthenticationFailedException {
+	public UserProfile newUserRegistration(UserProfile userProfile) throws ForgotPasswordDaoException, AuthenticationFailedException {
 		
 		return dao.newUserRegistration(userProfile);
 	}
