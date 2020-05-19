@@ -29,7 +29,6 @@ public class JobInformationDaoImpl implements JobInformationDao{
             final String get_all_jobs = "select tbl_job_information.JOB_ID, tbl_job_information.COMPANY_NAME, tbl_job_information.DESIGNATION, tbl_job_information.JOB_DESCRIPTION, tbl_city_details.CITY from tbl_job_information INNER Join tbl_city_details on tbl_job_information.CITY_ID = tbl_city_details.CITY_ID where tbl_job_information.JOB_ID not in (select JOB_ID from tbl_job_application_status where STUDENT_ID = "+student_id+")";
 
 			jobs = jdbcTemplate.query(get_all_jobs, new JobInformationRowMapper());
-			System.out.print(jobs);
 
         } catch (Exception e) {
             logger.error(e.getLocalizedMessage(),e);

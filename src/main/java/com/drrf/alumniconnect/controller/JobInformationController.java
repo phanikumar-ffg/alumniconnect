@@ -38,7 +38,6 @@ public class JobInformationController {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response getAllJobs(@PathParam(value = "student_id")Long student_id) { 
-		System.out.print(student_id);
 		logger.info("Received request for Jobs");
 		try {
 			return Response.ok().entity(JobInfoService.getJobs(student_id)).build();
