@@ -1,6 +1,6 @@
 package com.drrf.alumniconnect.dao;
 
-import java.util.Date;
+import java.sql.Timestamp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,8 +53,12 @@ public class JobRequestDaoImpl implements JobRequestDao{
 
 	public void makeDBInsert(JobRequest jobReq) throws Exception{
 		try {
-			String sql = "INSERT INTO tbl_job_application_status (STUDENT_ID, JOB_ID, APPLICATION_STATUS, CREATE_TIMESTAMP) VALUES (?,?,?,?)";
-			int i = jdbcTemplate.update(sql, new Object[] { jobReq.getStudentId(), jobReq.getJobId(), "Submitted", new Date() });
+			java.util.Date date=new java.util.Date();
+			java.sql.Date sqlDate=new java.sql.Date(date.getTime());
+			Timestamp sqlTime=new Timestamp(date.getTime());
+
+			String sql = "INSERT INTO tbl_job_application_status (STUDENT_ID, JOB_ID, APPLICATION_STATUS, DATE_OF_SELECTION, TIMESTAMP) VALUES (?,?,?,?,?)";
+			int i = jdbcTemplate.update(sql, new Object[] { jobReq.getStudentId(), jobReq.getJobId(), "Submitted", sqlDate, sqlTime });
 			if(i==0){
 				throw new Exception( "Error occured while saving job request details");
 			}
