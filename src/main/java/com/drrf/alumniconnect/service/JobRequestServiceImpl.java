@@ -14,7 +14,7 @@ public class JobRequestServiceImpl implements JobRequestService{
     JobRequestDao jobReqDao;
 
     @Override
-    public String sendJobRequest(JobRequest jobReq) {
+    public String sendJobRequest(JobRequest jobReq){
         return jobReqDao.sendJobRequest(jobReq);
     }
 

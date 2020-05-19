@@ -32,7 +32,7 @@ public class JobRequestDaoImpl implements JobRequestDao{
 			}else {
 				this.makeDBInsert(jobReq);
 				String emailBody= "New Job Request\n\nPlease find the details below.\n\n\n"
-                        +"User ID: "+jobReq.getStudentId()+" \nStudent_Name: "+jobReq.getStudentName()+
+                        +"User ID: "+jobReq.getStudentId()+" \nStudent_Email: "+jobReq.getStudentEmail()+
                         "\nJob_ID: "+ jobReq.getJobId()
                         ;
 				
@@ -40,7 +40,8 @@ public class JobRequestDaoImpl implements JobRequestDao{
 		        mail.setMailFrom(APIUtils.MAIL_FROM);
 		        mail.setMailTo(APIUtils.MAIL_TO);
 		        mail.setMailSubject(APIUtils.MAIL_JOB_REQ_SUB);
-		        mail.setMailContent(emailBody);
+				mail.setMailContent(emailBody);
+				mail.setMailCc(jobReq.getStudentEmail());
 		        mailService.sendEmail(mail);
 		        message = "Job Request Successfully sent!!";
 		    }

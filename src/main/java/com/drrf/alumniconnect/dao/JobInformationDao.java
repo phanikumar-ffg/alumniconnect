@@ -7,6 +7,6 @@ import com.drrf.alumniconnect.model.JobInformation;
 
 public interface JobInformationDao {
 
-    public List<JobInformation> getJobs() throws Exception;
+    public List<JobInformation> getJobs(Long student_id) throws Exception;
     public String saveJobEntryDetails(JobInformation jobInformation) throws JobInformationDaoException;
 }
