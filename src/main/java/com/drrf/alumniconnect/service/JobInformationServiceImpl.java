@@ -14,8 +14,8 @@ public class JobInformationServiceImpl implements JobInformationService {
 	JobInformationDao JobInfoDao;
 
 	@Override
-	public List<JobInformation> getJobs() throws Exception{
-		return JobInfoDao.getJobs();
+	public List<JobInformation> getJobs(Long student_id) throws Exception{
+		return JobInfoDao.getJobs(student_id);
 	}
 
 	@Override
