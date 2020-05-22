@@ -1,22 +1,27 @@
 package com.drrf.alumniconnect.model;
 
 public class AdminHelpRequests {
-    private HelpHistory helpHistory;
-    private UserProfile userProfile;
+    public AdminHelpRequests(HelpHistory hh,UserProfile up,AdminHelpRequestStatus ahrs){
+        this.helpHistory=hh;
+        this.userProfile=up;
+        this.adminHelpRequestStatus=ahrs;
+    }
+
+    private final HelpHistory helpHistory;
+    private final UserProfile userProfile;
+    private final AdminHelpRequestStatus adminHelpRequestStatus;
 
     public HelpHistory getHelpHistory() {
         return helpHistory;
     }
 
-    public void setHelpHistory(HelpHistory helpHistory) {
-        this.helpHistory = helpHistory;
-    }
+
 
     public UserProfile getUserProfile() {
         return userProfile;
     }
 
-    public void setUserProfile(UserProfile userProfile) {
-        this.userProfile = userProfile;
+    public AdminHelpRequestStatus getAdminHelpRequestStatus() {
+        return adminHelpRequestStatus;
     }
 }
