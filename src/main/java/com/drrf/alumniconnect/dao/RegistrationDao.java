@@ -1,4 +1,3 @@
-/*
 package com.drrf.alumniconnect.dao;
 
 import javax.mail.AuthenticationFailedException;
@@ -11,4 +10,4 @@ public interface RegistrationDao {
 	public UserProfile newUserRegistration(UserProfile userProfile) throws ForgotPasswordDaoException, AuthenticationFailedException ;
 
 }
-*/
+

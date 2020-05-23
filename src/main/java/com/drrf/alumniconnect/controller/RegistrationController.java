@@ -3,7 +3,6 @@ package com.drrf.alumniconnect.controller;
 import com.drrf.alumniconnect.exceptions.UserNotFoundDaoException;
 import com.drrf.alumniconnect.model.LoginDetails;
 import com.drrf.alumniconnect.model.UserProfile;
-import com.drrf.alumniconnect.service.LoginService;
 import com.drrf.alumniconnect.service.RegistrationService;
 import com.drrf.alumniconnect.utils.APIUtils;
 import com.google.gson.JsonObject;

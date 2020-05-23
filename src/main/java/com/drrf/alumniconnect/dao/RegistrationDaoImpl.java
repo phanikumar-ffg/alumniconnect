@@ -65,10 +65,10 @@ public class RegistrationDaoImpl implements RegistrationDao{
                 DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 String formattedDate= dateFormat.format(date);
                 String pass=generatePassword(8);
-                System.out.println(pass);
+                //System.out.println(pass);
                 jdbcTemplate.update(insert_login_details, userProfile.getStudentId(), userProfile.getFirstName(), pass, formattedDate, formattedDate);
                 String emailBody = "New User Registration\n\nPlease find the details below.\n\n\n"
-                        + "User ID: " + userProfile.getStudentId() + " \nPassword: ";
+                        + "User ID: " + userProfile.getStudentId() + " \nPassword: " + pass;
 
                 Mail mail = new Mail();
                 mail.setMailFrom(APIUtils.MAIL_FROM);

@@ -1,4 +1,3 @@
-/*
 package com.drrf.alumniconnect.service;
 
 import javax.mail.AuthenticationFailedException;
@@ -26,4 +25,4 @@ public class RegistrationServiceImpl implements RegistrationService {
 	
 
 }
-*/
+
