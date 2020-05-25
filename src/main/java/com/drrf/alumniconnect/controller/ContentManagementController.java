@@ -5,6 +5,7 @@ import com.drrf.alumniconnect.model.ContentManagement;
 import com.drrf.alumniconnect.model.HelpHistory;
 import com.drrf.alumniconnect.service.ContentManagementService;
 import com.drrf.alumniconnect.service.ContentRequestService;
+import com.drrf.alumniconnect.service.DeleteContentService;
 import com.drrf.alumniconnect.utils.APIUtils;
 import com.google.gson.JsonObject;
 import org.slf4j.Logger;
@@ -25,6 +26,9 @@ public class ContentManagementController {
 
     @Autowired
     private ContentRequestService contentRequestService;
+
+    @Autowired
+    private DeleteContentService deleteContentService;
 
     @GET
     @Path("/content/details")
@@ -58,4 +62,21 @@ public class ContentManagementController {
         }
 
     }
+    @POST
+    @Path("/content/delete")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response contentDelete(@RequestBody ContentManagement content) {
+        logger.info("Deleting content Management request");
+        try {
+              return Response.ok().entity(deleteContentService.deleteContentRequest (content)).build();
+        } catch (Exception e) {
+            JsonObject error = new JsonObject();
+            error.addProperty(APIUtils.ERROR_MESSAGE, e.getLocalizedMessage());
+            //return Response.status(Status.INTERNAL_SERVER_ERROR).build();
+            return Response.status(Response.Status.BAD_REQUEST).entity(error.toString()).build();
+        }
+
+    }
+
 }

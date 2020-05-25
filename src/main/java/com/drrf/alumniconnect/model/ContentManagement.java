@@ -8,7 +8,16 @@ public class ContentManagement {
     private String contentURL;
     private String contentTitle;
     private String contentDesc;
+    private String assessmentURL;
     private Timestamp createDate;
+
+    public String getAssessmentURL() {
+        return assessmentURL;
+    }
+
+    public void setAssessmentURL(String assessmentURL) {
+        this.assessmentURL = assessmentURL;
+    }
 
     public long getContentId() {
         return contentId;

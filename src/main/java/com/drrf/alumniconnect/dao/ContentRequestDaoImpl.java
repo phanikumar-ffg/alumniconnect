@@ -27,11 +27,11 @@ public class ContentRequestDaoImpl implements ContentRequestDao {
     @Override
     public String sendContentRequest(ContentManagement contentManagement) throws CannotGetJdbcConnectionException {
         try {
-            if ((!(contentManagement.getContentURL().isEmpty() || contentManagement.getContentTitle().isEmpty()) && checkURL(contentManagement.getContentURL()))){
+            if ((!(contentManagement.getContentURL().isEmpty() || contentManagement.getContentTitle().isEmpty()) && checkURL(contentManagement.getContentURL()) && checkURL(contentManagement.getAssessmentURL()))){
                 logger.info("Inserting a new content with Content Title {} and URl {} at time {}", contentManagement.getContentTitle(), contentManagement.getContentURL(), timestamp);
                 contentManagement.setCreateDate(timestamp);
-                String sql = "INSERT INTO TBL_CONTENT_MANAGEMENT (CONTENT_ID,CONTENT_URL,CONTENT_TITLE,CONTENT_DESC,CREATE_TIMESTAMP) VALUES ('" + contentManagement.getContentId()
-                        + "','" + contentManagement.getContentURL() + "','" + contentManagement.getContentTitle() + "','" + contentManagement.getContentDesc() + "','" + contentManagement.getCreateDate() + "')";
+                String sql = "INSERT INTO TBL_CONTENT_MANAGEMENT (CONTENT_ID,CONTENT_URL,CONTENT_TITLE,CONTENT_DESC,ASSESSMENT_URL, CREATE_TIMESTAMP) VALUES ('" + contentManagement.getContentId()
+                        + "','" + contentManagement.getContentURL() + "','" + contentManagement.getContentTitle() + "','" + contentManagement.getContentDesc() + "','" + contentManagement.getAssessmentURL() + "','" + contentManagement.getCreateDate() + "')";
                 int i = jdbcTemplate.update(sql);
 
                 System.out.println("The value of i");
@@ -43,7 +43,7 @@ public class ContentRequestDaoImpl implements ContentRequestDao {
             } else {
                 if((contentManagement.getContentURL().isEmpty()  || contentManagement.getContentTitle().isEmpty()))
                     return "Error occurred: Cannot save the content with no Title or URL";
-                else if (!checkURL(contentManagement.getContentURL()))
+                else if (!(checkURL(contentManagement.getContentURL())||checkURL(contentManagement.getAssessmentURL())))
                     return "Error occurred: URL is invalid, Please check";
                 else
                     return "Error Occurred";
