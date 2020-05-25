@@ -51,36 +51,41 @@ public class RegistrationDaoImpl implements RegistrationDao{
         final String check_login_details = "select * from tbl_login_details where student_id=?";
         try {
             loginDetails = jdbcTemplate.queryForObject(check_login_details, new Object[]{userProfile.getStudentId()}, new LoginDetailsRowMapper());
-            return userProfile1;
+            return null;
         }
         catch (EmptyResultDataAccessException e) {
             final String check_profile_details = "select * from tbl_profile_data where student_id=?";
             try {
                 userProfile1 = jdbcTemplate.queryForObject(check_profile_details, new Object[]{userProfile.getStudentId()}, new UserProfileRowMapper());
-                final String insert_login_details = "insert into tbl_login_details() values(?,?,?,?,?)";
-                //Date date= new Date();
-                Calendar cal = Calendar.getInstance();
-                Date date=cal.getTime();
-                String strDateFormat = "YYYY-MM-DD hh:mm:ss a";
-                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                String formattedDate= dateFormat.format(date);
-                String pass=generatePassword(8);
-                //System.out.println(pass);
-                jdbcTemplate.update(insert_login_details, userProfile.getStudentId(), userProfile.getFirstName(), pass, formattedDate, formattedDate);
-                String emailBody = "New User Registration\n\nPlease find the details below.\n\n\n"
-                        + "User ID: " + userProfile.getStudentId() + " \nPassword: " + pass;
+                if(userProfile1.getCenterId()==userProfile.getCenterId() && userProfile1.getDob()==userProfile.getDob() && userProfile1.getFirstName()==userProfile.getFirstName()) {
+                    final String insert_login_details = "insert into tbl_login_details() values(?,?,?,?,?)";
+                    //Date date= new Date();
+                    Calendar cal = Calendar.getInstance();
+                    Date date = cal.getTime();
+                    String strDateFormat = "YYYY-MM-DD hh:mm:ss a";
+                    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    String formattedDate = dateFormat.format(date);
+                    String pass = generatePassword(8);
+                    //System.out.println(pass);
+                    jdbcTemplate.update(insert_login_details, userProfile.getStudentId(), userProfile.getFirstName(), pass, formattedDate, formattedDate);
+                    String emailBody = "New User Registration\n\nPlease find the details below.\n\n\n"
+                            + "User ID: " + userProfile.getStudentId() + " \nPassword: " + pass;
 
-                Mail mail = new Mail();
-                mail.setMailFrom(APIUtils.MAIL_FROM);
-                mail.setMailTo(APIUtils.MAIL_TO);
-                mail.setMailSubject(APIUtils.MAIL_NEW_USR_SUB);
-                mail.setMailContent(emailBody);
-                mailService.sendEmail(mail);
-                message = "User Account created Successfully!!";
-                return userProfile;
+                    Mail mail = new Mail();
+                    mail.setMailFrom(APIUtils.MAIL_FROM);
+                    mail.setMailTo(APIUtils.MAIL_TO);
+                    mail.setMailSubject(APIUtils.MAIL_NEW_USR_SUB);
+                    mail.setMailContent(emailBody);
+                    mailService.sendEmail(mail);
+                    message = "User Account created Successfully!!";
+                    return userProfile;
+                }
+                else {
+                    return null;
+                }
             }
             catch (EmptyResultDataAccessException ex) {
-                return userProfile1;
+                return null;
             }
         }
     }
