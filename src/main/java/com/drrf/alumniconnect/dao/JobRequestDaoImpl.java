@@ -30,10 +30,10 @@ public class JobRequestDaoImpl implements JobRequestDao{
 			if (jobReq == null ) {
 				throw new Exception("No Request Data Found");
 			}else {
-				this.makeDBInsert(jobReq);
 				String emailBody= "New Job Request\n\nPlease find the details below.\n\n\n"
                         +"User ID: "+jobReq.getStudentId()+" \nStudent_Email: "+jobReq.getStudentEmail()+
-                        "\nJob_ID: "+ jobReq.getJobId()
+						"\nJob_ID: "+ jobReq.getJobId() + "\nJob_Role: "+ jobReq.getJobRole()+
+						"\nJob_Company: "+ jobReq.getJobCompanyName() +"\nJob_Location: "+ jobReq.getJobCity()
                         ;
 				
 		        Mail mail = new Mail();
@@ -42,14 +42,23 @@ public class JobRequestDaoImpl implements JobRequestDao{
 		        mail.setMailSubject(APIUtils.MAIL_JOB_REQ_SUB);
 				mail.setMailContent(emailBody);
 				mail.setMailCc(jobReq.getStudentEmail());
-		        mailService.sendEmail(mail);
-		        message = "Job Request Successfully sent!!";
+				try {
+					mailService.sendEmail(mail);
+					this.makeDBInsert(jobReq);
+					message = "Job Request Successfully sent!!";
+					return message;
+				}
+				catch(Exception e){
+					logger.error(e.getLocalizedMessage(),e);
+					message = "Sending Job Request Failed";
+					return message;
+				}
+
 		    }
 		}catch(Exception e) {
-            logger.error(e.getLocalizedMessage(),e);
-            message = "Sending Job Request Failed!!";
+			logger.error(e.getLocalizedMessage(),e);
+			return message;
         }
-        return message;
 	}
 
 	public void makeDBInsert(JobRequest jobReq) throws Exception{
