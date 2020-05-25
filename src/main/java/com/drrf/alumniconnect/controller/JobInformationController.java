@@ -54,12 +54,16 @@ public class JobInformationController {
 	public Response jobRequest(@RequestBody JobRequest job) { 
 		logger.info("Received a job application request");
 		try {
-			return Response.ok().entity(JobReqService.sendJobRequest(job)).build();
+			String resMessage = JobReqService.sendJobRequest(job);
+			if (resMessage == "Sending Job Request Failed"){
+				throw new Exception(resMessage);
+			}
+			return Response.ok().entity(resMessage).build();
 		} catch (Exception e) {	
 			JsonObject error=new JsonObject();
 			error.addProperty(APIUtils.ERROR_MESSAGE, e.getLocalizedMessage());
 			//return Response.status(Status.INTERNAL_SERVER_ERROR).build();
-			return Response.status(Status.BAD_REQUEST).entity(error.toString()).build();
+			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(error.toString()).build();
 		}
 
 	}
