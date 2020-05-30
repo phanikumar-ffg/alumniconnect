@@ -30,10 +30,11 @@ public class JobRequestDaoImpl implements JobRequestDao{
 			if (jobReq == null ) {
 				throw new Exception("No Request Data Found");
 			}else {
-				String emailBody= "New Job Request\n\nPlease find the details below.\n\n\n"
-                        +"User ID: "+jobReq.getStudentId()+" \nStudent_Email: "+jobReq.getStudentEmail()+
-						"\nJob_ID: "+ jobReq.getJobId() + "\nJob_Role: "+ jobReq.getJobRole()+
-						"\nJob_Company: "+ jobReq.getJobCompanyName() +"\nJob_Location: "+ jobReq.getJobCity()
+				String emailBody= "An interest has been expressed for the following job opening by "+ 
+						jobReq.getStudentName().toUpperCase()+" (Aspirant id - "+jobReq.getStudentId()+")\n\n"
+						+"Job ID: "+ jobReq.getJobId() + "\nCompany Name: "+ jobReq.getJobCompanyName()+
+						"\nRole/Designation: "+ jobReq.getJobRole() +"\nJob Description: "+ jobReq.getJobDescription()
+						+"\n\nRegards,\nTeam DRF Grow"
                         ;
 				
 		        Mail mail = new Mail();

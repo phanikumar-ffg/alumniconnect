@@ -3,10 +3,11 @@ package com.drrf.alumniconnect.model;
 public class JobRequest {
     private long studentId;
 	private String studentEmail;
+	private String studentName;
     private long jobId;
     private String jobRole;
     private String jobCompanyName;
-    private String jobCity;
+    private String jobDescription;
 	
 	public long getStudentId() {
 		return studentId;
@@ -17,8 +18,14 @@ public class JobRequest {
     public String getStudentEmail() {
 		return studentEmail;
 	}
-	public void setStudentName(String studentEmail) {
+	public void setStudentEmail(String studentEmail) {
 		this.studentEmail = studentEmail;
+	}
+	public String getStudentName() {
+		return studentName;
+	}
+	public void setStudentName(String studentName) {
+		this.studentName = studentName;
 	}
 	public long getJobId() {
 		return jobId;
@@ -32,11 +39,11 @@ public class JobRequest {
 	public void setJobCompanyName(String jobCompany) {
 		this.jobCompanyName = jobCompany;
     }
-    public String getJobCity() {
-		return jobCity;
+    public String getJobDescription() {
+		return jobDescription;
 	}
-	public void setJobCity(String jobCity) {
-		this.jobCity = jobCity;
+	public void setJobDescription(String jobDescription) {
+		this.jobDescription = jobDescription;
 	}
     public String getJobRole() {
 		return jobRole;
