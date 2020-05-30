@@ -54,10 +54,11 @@ public class RegistrationDaoImpl implements RegistrationDao{
             return null;
         }
         catch (EmptyResultDataAccessException e) {
-            final String check_profile_details = "select * from tbl_profile_data where student_id=?";
+            final String check_profile_details = "select * from tbl_profile_data where student_id=? and first_name=? and centre_id=? and date_of_birth=?";
             try {
-                userProfile1 = jdbcTemplate.queryForObject(check_profile_details, new Object[]{userProfile.getStudentId()}, new UserProfileRowMapper());
-                if(userProfile1.getCenterId()==userProfile.getCenterId() && userProfile1.getDob()==userProfile.getDob() && userProfile1.getFirstName()==userProfile.getFirstName()) {
+                userProfile1 = jdbcTemplate.queryForObject(check_profile_details, new Object[]{userProfile.getStudentId(),userProfile.getFirstName(),userProfile.getCenterId(),new SimpleDateFormat("yyyy-MM-dd").format(userProfile.getDob())}, new UserProfileRowMapper());
+                String dt=new SimpleDateFormat("yyyy-MM-dd").format(userProfile.getDob());
+                System.out.println(dt.compareTo(userProfile1.getDob().toString()));
                     final String insert_login_details = "insert into tbl_login_details() values(?,?,?,?,?)";
                     //Date date= new Date();
                     Calendar cal = Calendar.getInstance();
@@ -73,16 +74,12 @@ public class RegistrationDaoImpl implements RegistrationDao{
 
                     Mail mail = new Mail();
                     mail.setMailFrom(APIUtils.MAIL_FROM);
-                    mail.setMailTo(APIUtils.MAIL_TO);
+                    mail.setMailTo(userProfile1.getEmail());
                     mail.setMailSubject(APIUtils.MAIL_NEW_USR_SUB);
                     mail.setMailContent(emailBody);
                     mailService.sendEmail(mail);
                     message = "User Account created Successfully!!";
-                    return userProfile;
-                }
-                else {
-                    return null;
-                }
+                    return userProfile1;
             }
             catch (EmptyResultDataAccessException ex) {
                 return null;
