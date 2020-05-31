@@ -6,7 +6,7 @@ public class ContentManagement {
 
     private long contentId;
     private String contentURL;
-    private String contentTitle;
+    private String contentType;
     private String contentDesc;
     private String assessmentURL;
     private Timestamp createDate;
@@ -35,12 +35,12 @@ public class ContentManagement {
         this.contentURL = contentURL;
     }
 
-    public String getContentTitle() {
-        return contentTitle;
+    public String getContentType() {
+        return contentType;
     }
 
-    public void setContentTitle(String contentTitle) {
-        this.contentTitle = contentTitle;
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
     }
 
     public String getContentDesc() {

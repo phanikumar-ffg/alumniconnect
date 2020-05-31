@@ -16,7 +16,7 @@ public class ContentManagementRowMapper implements RowMapper<ContentManagement> 
 
         contentManagement.setContentId(resultSet.getLong("CONTENT_ID"));
         contentManagement.setContentURL(resultSet.getString("CONTENT_URL"));
-        contentManagement.setContentTitle(resultSet.getString("CONTENT_TITLE"));
+        contentManagement.setContentType(resultSet.getString("CONTENT_TYPE"));
         contentManagement.setContentDesc(resultSet.getString("CONTENT_DESC"));
         contentManagement.setAssessmentURL(resultSet.getString("ASSESSMENT_URL"));
         contentManagement.setCreateDate(resultSet.getTimestamp("CREATE_TIMESTAMP"));
