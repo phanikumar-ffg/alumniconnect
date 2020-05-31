@@ -3,6 +3,7 @@ package com.drrf.alumniconnect.dao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -35,11 +36,11 @@ public class LoginDaoImpl implements LoginDao{
 				String sql_user_profile = "select * from tbl_profile_data where email_address = ?";
 				userProfile = jdbcTemplate.queryForObject(sql_user_profile, new Object[]{loginDetails.getUserName()}, new UserProfileRowMapper());
 			}
-		} catch (UserNotFoundDaoException e) {
-			throw e;
+		} catch (UserNotFoundDaoException | DataAccessException e) {
+			throw new UserNotFoundDaoException( "User Id or password not valid");
 		}catch(Exception e) {
 			logger.error(e.getLocalizedMessage(),e);
-			throw new UserNotFoundDaoException( "Error occured while checking the user account information" +  user.getUserName());
+			throw new UserNotFoundDaoException( "Error occured while checking the user account information " +  user.getUserName());
 		}
 
 		return userProfile;
