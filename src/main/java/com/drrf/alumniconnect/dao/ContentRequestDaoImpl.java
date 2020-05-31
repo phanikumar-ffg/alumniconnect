@@ -27,21 +27,21 @@ public class ContentRequestDaoImpl implements ContentRequestDao {
     @Override
     public String sendContentRequest(ContentManagement contentManagement) throws CannotGetJdbcConnectionException {
         try {
-            if ((!(contentManagement.getContentURL().isEmpty() || contentManagement.getContentTitle().isEmpty()) && checkURL(contentManagement.getContentURL()) && checkURL(contentManagement.getAssessmentURL()))){
-                logger.info("Inserting a new content with Content Title {} and URl {} at time {}", contentManagement.getContentTitle(), contentManagement.getContentURL(), timestamp);
+            if ((!(contentManagement.getContentURL().isEmpty() || contentManagement.getContentDesc().isEmpty()) && checkURL(contentManagement.getContentURL()) && checkURL(contentManagement.getAssessmentURL()))){
+                logger.info("Inserting a new content with Content Title {} and URl {} at time {}", contentManagement.getContentDesc(), contentManagement.getContentURL(), timestamp);
                 contentManagement.setCreateDate(timestamp);
-                String sql = "INSERT INTO TBL_CONTENT_MANAGEMENT (CONTENT_ID,CONTENT_URL,CONTENT_TITLE,CONTENT_DESC,ASSESSMENT_URL, CREATE_TIMESTAMP) VALUES ('" + contentManagement.getContentId()
-                        + "','" + contentManagement.getContentURL() + "','" + contentManagement.getContentTitle() + "','" + contentManagement.getContentDesc() + "','" + contentManagement.getAssessmentURL() + "','" + contentManagement.getCreateDate() + "')";
+                String sql = "INSERT INTO TBL_CONTENT_MANAGEMENT (CONTENT_URL,CONTENT_TYPE,CONTENT_DESC,ASSESSMENT_URL, CREATE_TIMESTAMP) VALUES ('" + contentManagement.getContentURL() + "','"
+                        + contentManagement.getContentType() + "','" + contentManagement.getContentDesc() + "','" + contentManagement.getAssessmentURL() + "','" + contentManagement.getCreateDate() + "')";
                 int i = jdbcTemplate.update(sql);
 
                 System.out.println("The value of i");
                 if (i == 0) {
-                    throw new ContentNotFoundDaoException("Error occurred while saving Content information: " + contentManagement.getContentTitle());
+                    throw new ContentNotFoundDaoException("Error occurred while saving Content information: " + contentManagement.getContentDesc());
                 } else {
                     return "Request saved to database successfully";
                 }
             } else {
-                if((contentManagement.getContentURL().isEmpty()  || contentManagement.getContentTitle().isEmpty()))
+                if((contentManagement.getContentURL().isEmpty()  || contentManagement.getContentDesc().isEmpty()))
                     return "Error occurred: Cannot save the content with no Title or URL";
                 else if (!(checkURL(contentManagement.getContentURL())||checkURL(contentManagement.getAssessmentURL())))
                     return "Error occurred: URL is invalid, Please check";
