@@ -14,6 +14,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+
+import java.sql.Timestamp;
 import java.util.List;
 
 @Repository
@@ -27,8 +29,10 @@ public class HelpHistoryDaoImpl implements HelpHistoryDao {
 
     public String saveHelpDetails(HelpHistory helpHistory) throws HelpHistoryDaoException {
         try {
-            String sql = "INSERT INTO tbl_help_history (STUDENT_ID,REASON,DETAILS,CENTRE_ID,CREATE_TIMESTAMP,DESCRIPTION) VALUES ('" + helpHistory.getStudentId() + "','" + helpHistory.getReason() + "','" + helpHistory.getDetails() + "','" + helpHistory.getCenterId() + "','" + helpHistory.getCreateDate() + "','" + helpHistory.getDescription() + "')";
-            int i = jdbcTemplate.update(sql);
+            java.util.Date date=new java.util.Date();
+            Timestamp sqlTime=new Timestamp(date.getTime());
+            String sql = "INSERT INTO tbl_help_history (STUDENT_ID,REASON,DETAILS,CENTRE_ID,CREATE_TIMESTAMP,DESCRIPTION) VALUES (?,?,?,?,?,?)";
+            int i = jdbcTemplate.update(sql, new Object[] { helpHistory.getStudentId(), helpHistory.getReason(), helpHistory.getDetails(), helpHistory.getCenterId(), sqlTime,helpHistory.getDescription() });
 
             System.out.println("The value of i");
             if (i == 0) {
