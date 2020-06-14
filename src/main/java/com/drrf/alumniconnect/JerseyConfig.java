@@ -19,6 +19,9 @@ public class JerseyConfig extends ResourceConfig {
 		register(ContentManagementController.class);
 		register(CorsConfigurationDrf.class);
         register(CityDetailsController.class);
+		register(AdminHelpController.class);
+
+
 	}
 
 }
