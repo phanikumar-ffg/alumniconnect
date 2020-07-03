@@ -38,10 +38,11 @@ public class JobInformationController {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response getAllJobs(@PathParam(value = "student_id")Long student_id) { 
-		logger.info("Received request for Jobs");
+		logger.info("Received request for Jobs by aspirant: "+ student_id);
 		try {
 			return Response.ok().entity(JobInfoService.getJobs(student_id)).build();
 		} catch (Exception e) {	
+			logger.error("Error: "+e.getLocalizedMessage());
 			return Response.status(Status.BAD_REQUEST).entity("error in retrieving jobs").build();
 		}
 
@@ -52,7 +53,9 @@ public class JobInformationController {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response jobRequest(@RequestBody JobRequest job) { 
-		logger.info("Received a job application request");
+		logger.info("Received a job application request\n"+"Job request details: \n"+
+		"Job_ID: "+job.getJobId()+"\n"+"Student_id: "+job.getStudentId()+"\n"+
+		"Student_Name: "+job.getStudentName()+"\nStudent_Email: "+job.getStudentEmail());
 		try {
 			String resMessage = JobReqService.sendJobRequest(job);
 			if (resMessage == "Sending Job Request Failed"){
@@ -62,7 +65,6 @@ public class JobInformationController {
 		} catch (Exception e) {	
 			JsonObject error=new JsonObject();
 			error.addProperty(APIUtils.ERROR_MESSAGE, e.getLocalizedMessage());
-			//return Response.status(Status.INTERNAL_SERVER_ERROR).build();
 			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(error.toString()).build();
 		}
 
