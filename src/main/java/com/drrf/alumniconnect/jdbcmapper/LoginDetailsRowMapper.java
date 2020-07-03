@@ -13,13 +13,11 @@ public class LoginDetailsRowMapper implements RowMapper<LoginDetails> {
 	public LoginDetails mapRow(ResultSet resultSet, int rowNum) throws SQLException {
 		
 		 LoginDetails loginDetails = new LoginDetails();
-		 
-		 loginDetails.setStudentId(resultSet.getLong("student_id"));
-		 loginDetails.setUserName(resultSet.getString("username"));
+		 loginDetails.setSrNo(resultSet.getLong("SR_NO"));
+		 loginDetails.setEmailId(resultSet.getString("EMAIL_ID"));
 		 loginDetails.setPassword(resultSet.getString("password"));
-		 loginDetails.setCreateDate(resultSet.getTimestamp("create_timestamp"));
-		 loginDetails.setUpdateDate(resultSet.getTimestamp("update_timestamp"));
-	        return loginDetails;
+	     
+		 return loginDetails;
 	}
 
 	

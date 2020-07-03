@@ -1,26 +1,30 @@
 package com.drrf.alumniconnect.model;
 import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 public class UserProfile {
 	
-	private long studentId;
+	private long aspirantId;
 	private String firstName;
 	private String lastName;
-	private long mobile;
-	private String email;
-	private String address;
-	private long cityId;
-	private String centerId;
+	private String emailId;
+	private long phone;
 	private Date dob;
+	private String currentOrganization;
+	private long cityId;
+	private String cityName;
+	private long centerId;
+	private String centerName;
+	private String isAdmin;
+	
 	private Date createDate;
 	private Date updateDate;
 	
-	
-	
-	public long getStudentId() {
-		return studentId;
+	public long getAspirantId() {
+		return aspirantId;
 	}
-	public void setStudentId(long studentId) {
-		this.studentId = studentId;
+	public void setAspirantId(long aspirantId) {
+		this.aspirantId = aspirantId;
 	}
 	public String getFirstName() {
 		return firstName;
@@ -34,35 +38,17 @@ public class UserProfile {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	public long getMobile() {
-		return mobile;
+	public String getEmailId() {
+		return emailId;
 	}
-	public void setMobile(long mobile) {
-		this.mobile = mobile;
+	public void setEmailId(String emailId) {
+		this.emailId = emailId;
 	}
-	public String getEmail() {
-		return email;
+	public long getPhone() {
+		return phone;
 	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	public String getAddress() {
-		return address;
-	}
-	public void setAddress(String address) {
-		this.address = address;
-	}
-	public long getCityId() {
-		return cityId;
-	}
-	public void setCityId(long cityId) {
-		this.cityId = cityId;
-	}
-	public String getCenterId() {
-		return centerId;
-	}
-	public void setCenterId(String centerId) {
-		this.centerId = centerId;
+	public void setPhone(long phone) {
+		this.phone = phone;
 	}
 	public Date getDob() {
 		return dob;
@@ -70,12 +56,50 @@ public class UserProfile {
 	public void setDob(Date dob) {
 		this.dob = dob;
 	}
+	public String getCurrentOrganization() {
+		return currentOrganization;
+	}
+	public void setCurrentOrganization(String currentOrganization) {
+		this.currentOrganization = currentOrganization;
+	}
+	public long getCityId() {
+		return cityId;
+	}
+	public void setCityId(long cityId) {
+		this.cityId = cityId;
+	}
+	public String getCityName() {
+		return cityName;
+	}
+	public void setCityName(String cityName) {
+		this.cityName = cityName;
+	}
+	public long getCenterId() {
+		return centerId;
+	}
+	public void setCenterId(long centerId) {
+		this.centerId = centerId;
+	}
+	public String getCenterName() {
+		return centerName;
+	}
+	public void setCenterName(String centerName) {
+		this.centerName = centerName;
+	}
+	public String getIsAdmin() {
+		return isAdmin;
+	}
+	public void setIsAdmin(String isAdmin) {
+		this.isAdmin = isAdmin;
+	}
+	@JsonIgnore
 	public Date getCreateDate() {
 		return createDate;
 	}
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
+	@JsonIgnore
 	public Date getUpdateDate() {
 		return updateDate;
 	}
@@ -85,10 +109,13 @@ public class UserProfile {
 	
 	@Override
 	public String toString() {
-		return "UserProfile [firstName=" + firstName + ", lastName=" + lastName + ", mobile=" + mobile + ", email="
-				+ email + ", address=" + address + ", cityId=" + cityId + ", centerId=" + centerId + ", dob=" + dob
-				+ ", createDate=" + createDate + ", updateDate=" + updateDate + "]";
+		return "UserProfile [aspirantId=" + aspirantId + ", firstName=" + firstName + ", lastName=" + lastName
+				+ ", emailId=" + emailId + ", phone=" + phone + ", dob=" + dob + ", currentOrganization="
+				+ currentOrganization + ", cityId=" + cityId + ", cityName=" + cityName + ", centerId=" + centerId
+				+ ", centerName=" + centerName + ", isAdmin=" + isAdmin + ", createDate=" + createDate + ", updateDate="
+				+ updateDate + "]";
 	}
+
 
 	
 	
