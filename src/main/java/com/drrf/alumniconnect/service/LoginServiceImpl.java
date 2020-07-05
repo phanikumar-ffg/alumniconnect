@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import com.drrf.alumniconnect.dao.LoginDao;
 import com.drrf.alumniconnect.exceptions.UserNotFoundDaoException;
 import com.drrf.alumniconnect.model.LoginDetails;
-import com.drrf.alumniconnect.model.UserDetails;
 import com.drrf.alumniconnect.model.UserProfile;
 
 @Service
