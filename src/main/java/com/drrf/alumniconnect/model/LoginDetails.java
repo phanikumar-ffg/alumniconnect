@@ -3,25 +3,25 @@ package com.drrf.alumniconnect.model;
 import java.sql.Timestamp;
 public class LoginDetails {
 
-	private Long studentId;
-	private String userName;
+	private Long srNo;
+	private String emailId;
 	private String password;
 	private Timestamp createDate;
 	private Timestamp updateDate;
 	
 
-	
-	public Long getStudentId() {
-		return studentId;
+
+	public Long getSrNo() {
+		return srNo;
 	}
-	public void setStudentId(Long studentId) {
-		this.studentId = studentId;
+	public void setSrNo(Long srNo) {
+		this.srNo = srNo;
 	}
-	public String getUserName() {
-		return userName;
+	public String getEmailId() {
+		return emailId;
 	}
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setEmailId(String emailId) {
+		this.emailId = emailId;
 	}
 	public String getPassword() {
 		return password;
@@ -44,8 +44,8 @@ public class LoginDetails {
 	
 	@Override
 	public String toString() {
-		return "LoginDetails [studentId=" + studentId + ", userName=" + userName + ", password=" + password
-				+ ", createDate=" + createDate + ", updateDate=" + updateDate + "]";
+		return "LoginDetails [srNo=" + srNo + ", emailId=" + emailId + ", password=" + password + ", createDate="
+				+ createDate + ", updateDate=" + updateDate + "]";
 	}
 	
 	

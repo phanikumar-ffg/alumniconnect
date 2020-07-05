@@ -2,6 +2,7 @@ package com.drrf.alumniconnect.jdbcmapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 
 import org.springframework.jdbc.core.RowMapper;
 
@@ -15,20 +16,20 @@ public class UserProfileRowMapper implements RowMapper<UserProfile> {
 		
 		UserProfile userProfile = new UserProfile();
 		 
-		userProfile.setStudentId(resultSet.getLong("STUDENT_ID"));
+		userProfile.setAspirantId(resultSet.getLong("ASPIRANT_ID"));
 		userProfile.setFirstName(resultSet.getString("FIRST_NAME"));
 		userProfile.setLastName(resultSet.getString("LAST_NAME"));
-		userProfile.setMobile(resultSet.getLong("MOBILE_INT"));
-		userProfile.setEmail(resultSet.getString("EMAIL_ADDRESS"));
-		userProfile.setAddress(resultSet.getString("ADDRESS"));
+		userProfile.setDob(resultSet.getDate("DOB"));
+		userProfile.setPhone(resultSet.getLong("PHONE"));
+		userProfile.setEmailId(resultSet.getString("EMAIL_ID"));
 		userProfile.setCityId(resultSet.getLong("CITY_ID"));
-		userProfile.setDob(resultSet.getDate("DATE_OF_BIRTH"));
-		userProfile.setCenterId(resultSet.getString("CENTRE_ID"));
-		userProfile.setCreateDate(resultSet.getTimestamp("CREATE_TIMESTAMP"));
-		userProfile.setUpdateDate(resultSet.getTimestamp("UPDATE_TIMESTAMP"));
+		userProfile.setCityName(resultSet.getString("CITY_NAME"));
+		userProfile.setCenterId(resultSet.getLong("CENTRE_ID"));
+		userProfile.setCenterName(resultSet.getString("CENTRE_NAME"));
+		userProfile.setCurrentOrganization(resultSet.getString("CURRENT_ORGANIZATION"));
+		userProfile.setIsAdmin(resultSet.getString("IS_ADMIN"));
 	    
 		return userProfile;
 	}
 
-	
 }

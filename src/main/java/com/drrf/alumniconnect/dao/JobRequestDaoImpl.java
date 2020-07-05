@@ -44,20 +44,23 @@ public class JobRequestDaoImpl implements JobRequestDao{
 				mail.setMailContent(emailBody);
 				mail.setMailCc(jobReq.getStudentEmail());
 				try {
+					logger.info("Sending mail to: "+jobReq.getStudentEmail());
 					mailService.sendEmail(mail);
+					logger.info("Mail successfully sent");
 					this.makeDBInsert(jobReq);
+					logger.info("DB insert for job request was Successful");
 					message = "Job Request Successfully sent!!";
 					return message;
 				}
 				catch(Exception e){
-					logger.error(e.getLocalizedMessage(),e);
+					logger.error("Error: "+e.getLocalizedMessage());
 					message = "Sending Job Request Failed";
 					return message;
 				}
 
 		    }
 		}catch(Exception e) {
-			logger.error(e.getLocalizedMessage(),e);
+			logger.error("Error: "+e.getLocalizedMessage());
 			return message;
         }
 	}
@@ -67,7 +70,7 @@ public class JobRequestDaoImpl implements JobRequestDao{
 			java.util.Date date=new java.util.Date();
 			java.sql.Date sqlDate=new java.sql.Date(date.getTime());
 			Timestamp sqlTime=new Timestamp(date.getTime());
-
+			logger.info("Inserting job request details: "+jobReq.getStudentId()+","+jobReq.getJobId());
 			String sql = "INSERT INTO tbl_job_application_status (STUDENT_ID, JOB_ID, APPLICATION_STATUS, DATE_OF_SELECTION, TIMESTAMP) VALUES (?,?,?,?,?)";
 			int i = jdbcTemplate.update(sql, new Object[] { jobReq.getStudentId(), jobReq.getJobId(), "Submitted", sqlDate, sqlTime });
 			if(i==0){
@@ -75,7 +78,7 @@ public class JobRequestDaoImpl implements JobRequestDao{
 			}
 		}
 		catch(Exception e){
-			logger.error(e.getLocalizedMessage(),e);
+			logger.error("Error: "+e.getLocalizedMessage());
 			throw new Exception( "Error occured while saving job request details");
 		}
 
