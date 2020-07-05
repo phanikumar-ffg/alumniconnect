@@ -3,18 +3,18 @@ package com.drrf.alumniconnect.model;
 import java.sql.Timestamp;
 public class HelpHistory {
 
-	private long studentId;
+	private long aspirantId;
 	private String reason;
 	private String details;
 	private String centerId;
 	private Timestamp createDate;
 	private String description;
 	
-	public long getStudentId() {
-		return studentId;
+	public long getAspirantId() {
+		return aspirantId;
 	}
-	public void setStudentId(long studentId) {
-		this.studentId = studentId;
+	public void setAspirantId(long aspirantId) {
+		this.aspirantId = aspirantId;
 	}
 	public String getReason() {
 		return reason;
@@ -45,7 +45,7 @@ public class HelpHistory {
 
 	@Override
 	public String toString() {
-		return "HelpHistory [studentId=" + studentId + ", reason=" + reason + ", details=" + details + ", centerId="
+		return "HelpHistory [aspirantId=" + aspirantId + ", reason=" + reason + ", details=" + details + ", centerId="
 				+ centerId + ", createDate=" + createDate + ", description=" + description + "]";
 	}
 }

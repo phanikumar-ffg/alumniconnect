@@ -12,7 +12,6 @@ public class JobInformation {
 	private String DESIGNATION;
 	private String QUALIFICATION_REQ;
 	private Timestamp CREATE_TIMESTAMP;
-	private String CITY;
 
 	
 	public long getJobId() {
@@ -62,12 +61,6 @@ public class JobInformation {
 	}
 	public void setCreateDate(Timestamp createDate) {
 		this.CREATE_TIMESTAMP = createDate;
-	}
-	public String getCity(){
-		return CITY;
-	}
-	public void setCity(String city){
-		this.CITY=city;
 	}
 
 	@Override

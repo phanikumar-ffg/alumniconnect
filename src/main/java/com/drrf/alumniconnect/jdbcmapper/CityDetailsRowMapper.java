@@ -11,9 +11,8 @@ public class CityDetailsRowMapper implements RowMapper<CityDetails> {
     public CityDetails mapRow(ResultSet resultSet, int i) throws SQLException {
         CityDetails cityDetails = new CityDetails();
         cityDetails.setCityId(resultSet.getLong("city_id"));
-        cityDetails.setCity(resultSet.getString("city"));
-        cityDetails.setState(resultSet.getString("state"));
-        cityDetails.setCreateDate(resultSet.getTimestamp("create_timestamp"));
+        cityDetails.setCityName(resultSet.getString("city_name"));
+        cityDetails.setStateId(resultSet.getLong("state_id"));
         return cityDetails;
     }
 }
