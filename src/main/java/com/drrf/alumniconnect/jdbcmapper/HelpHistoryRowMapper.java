@@ -10,7 +10,7 @@ public class HelpHistoryRowMapper implements RowMapper<HelpHistory> {
     @Override
     public HelpHistory mapRow(ResultSet resultSet, int rowNum) throws SQLException {
         HelpHistory helpHistory=new HelpHistory();
-        helpHistory.setStudentId(resultSet.getLong("STUDENT_ID"));
+        helpHistory.setAspirantId(resultSet.getLong("ASPIRANT_ID"));
         helpHistory.setReason(resultSet.getString("REASON"));
         helpHistory.setDetails(resultSet.getString("DETAILS"));
         helpHistory.setCenterId(resultSet.getString("CENTRE_ID"));

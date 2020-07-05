@@ -43,17 +43,19 @@ public class JobInformationDaoImpl implements JobInformationDao{
 		try {
 			java.util.Date date=new java.util.Date();
 			Timestamp sqlTime=new Timestamp(date.getTime());
-
+			logger.info("Inserting a new  job entry with Company Name{}, Designation{}, City details{}", jobInformation.getCompanyName(), jobInformation.getDesignation(),jobInformation.getCityId());
 			String sql = "INSERT INTO tbl_job_information (COMPANY_NAME,DESIGNATION,JOB_DESCRIPTION,CITY_ID,VACANCY_COUNT,QUALIFICATION_REQ,CREATE_TIMESTAMP) VALUES (?,?,?,?,?,?,?)";
 			int i = jdbcTemplate.update(sql,new Object[]{ jobInformation.getCompanyName(), jobInformation.getDesignation() , jobInformation.getJobDescription() ,jobInformation.getCityId(), jobInformation.getVacancyCount() ,jobInformation.getQualificationReq() , sqlTime});
 			if(i==0){
 				throw new JobInformationDaoException("Error occurred while saving Job Details"+jobInformation.getJobId());
 			}
 			else {
+				logger.info("Detaiils inserted successfully");
 				return "success";
 			}
 		}
 		catch (JobInformationDaoException e) {
+			logger.error(e.getLocalizedMessage(),e);
 			throw e;
 		}
 		catch(Exception e){
