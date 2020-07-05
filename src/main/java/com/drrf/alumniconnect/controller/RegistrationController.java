@@ -11,10 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -32,6 +29,20 @@ public class RegistrationController {
         logger.info("Received request for new User signup");
         try {
             return Response.ok().entity(registrationService.newUserRegistration(userProfile)).build();
+        } catch (Exception e) {
+            JsonObject error = new JsonObject();
+            error.addProperty(APIUtils.ERROR_MESSAGE, e.getLocalizedMessage());
+            //return Response.status(Status.INTERNAL_SERVER_ERROR).build();
+            return Response.status(Response.Status.BAD_REQUEST).entity(error.toString()).build();
+        }
+    }
+
+    @GET
+    @Path("/centreDetails")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getCentres(){
+        try {
+            return Response.ok().entity(registrationService.getCentres()).build();
         } catch (Exception e) {
             JsonObject error = new JsonObject();
             error.addProperty(APIUtils.ERROR_MESSAGE, e.getLocalizedMessage());
