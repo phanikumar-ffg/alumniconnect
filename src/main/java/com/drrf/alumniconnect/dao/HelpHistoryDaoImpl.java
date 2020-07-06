@@ -40,7 +40,7 @@ public class HelpHistoryDaoImpl implements HelpHistoryDao {
             if (i == 0) {
                 throw new HelpHistoryDaoException("Error occured while saving user help information" + helpHistory.getAspirantId());
             } else {
-               String emailBody = "Dr Reddy's Foundation,\n\n Received a Help Request from a student \n\n\n"+"\n\n Aspirant Id->" + + helpHistory.getAspirantId() + "\n\n Reason->" + helpHistory.getReason() + "\n\n Details->" + helpHistory.getDetails() + "\n\n Description->" + helpHistory.getDescription() + "\n \n Regards,\n Dr Reddy Foundation";
+               String emailBody = "Dear Admin,\n\n A help request has been initialized by (Aspirant Id-" + + helpHistory.getAspirantId() + ") and the details of the request are as follows: \n\n Problem Type-" + helpHistory.getReason() + "\n Problem Description-" + helpHistory.getDetails() + "\n Additional Details-" + helpHistory.getDescription() + "\n \n Regards,\n Team Dr Reddy Foundation";
 
                 Mail mail = new Mail();
                 mail.setMailFrom(APIUtils.MAIL_FROM);
