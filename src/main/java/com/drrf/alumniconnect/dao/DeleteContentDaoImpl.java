@@ -45,15 +45,15 @@ public class DeleteContentDaoImpl implements DeleteContentDao{
                 if (i == 0) {
                     throw new ContentNotFoundDaoException("Error occurred while deleting Content information: " + contentManagement.getContentDesc());
                 } else {
-                    logger.info("Request deleted to database successfully");
-                    return "Request deleted to database successfully";
+                    logger.info("Request deleted from database successfully");
+                    return "Request deleted from database successfully";
                 }
             }
         } catch (ContentNotFoundDaoException e) {
             throw e;
         }catch(Exception e) {
             logger.error(e.getLocalizedMessage(),e);
-            throw new ContentNotFoundDaoException( "Error occurred while finding the content Management information" +  contentManagement.getContentDesc());
+            throw new ContentNotFoundDaoException( "Error occurred while finding the content Management information: " +  contentManagement.getContentDesc());
         }
     }
     public Integer countRecords(ContentManagement contentManagement){
