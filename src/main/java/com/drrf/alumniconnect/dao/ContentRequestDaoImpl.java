@@ -28,18 +28,25 @@ public class ContentRequestDaoImpl implements ContentRequestDao {
     public String sendContentRequest(ContentManagement contentManagement) throws CannotGetJdbcConnectionException {
         try {
             if ((!(contentManagement.getContentURL().isEmpty() || contentManagement.getContentDesc().isEmpty()) && checkURL(contentManagement.getContentURL()) && checkURL(contentManagement.getAssessmentURL()))){
-                logger.info("Inserting a new content with Content Title {} and URl {} at time {}", contentManagement.getContentDesc(), contentManagement.getContentURL(), timestamp);
-                contentManagement.setCreateDate(timestamp);
-                String sql = "INSERT INTO TBL_CONTENT_MANAGEMENT (CONTENT_URL,CONTENT_TYPE,CONTENT_DESC,ASSESSMENT_URL, CREATE_TIMESTAMP) VALUES ('" + contentManagement.getContentURL() + "','"
-                        + contentManagement.getContentType() + "','" + contentManagement.getContentDesc() + "','" + contentManagement.getAssessmentURL() + "','" + contentManagement.getCreateDate() + "')";
-                int i = jdbcTemplate.update(sql);
+                if( countRecords(contentManagement) == 0 ){
+                    logger.info("Inserting a new content with Content Title {} and URl {} at time {}", contentManagement.getContentDesc(), contentManagement.getContentURL(), timestamp);
+                    contentManagement.setCreateDate(timestamp);
+                    String sql = "INSERT INTO TBL_CONTENT_MANAGEMENT (CONTENT_URL,CONTENT_TYPE,CONTENT_DESC,ASSESSMENT_URL, CREATE_TIMESTAMP) VALUES ('" + contentManagement.getContentURL() + "','"
+                            + contentManagement.getContentType() + "','" + contentManagement.getContentDesc() + "','" + contentManagement.getAssessmentURL() + "','" + contentManagement.getCreateDate() + "')";
+                    int i = jdbcTemplate.update(sql);
 
-                System.out.println("The value of i");
-                if (i == 0) {
-                    throw new ContentNotFoundDaoException("Error occurred while saving Content information: " + contentManagement.getContentDesc());
-                } else {
-                    return "Request saved to database successfully";
+                    System.out.println("The value of i");
+                    if (i == 0) {
+                        throw new ContentNotFoundDaoException("Error occurred while saving Content information: " + contentManagement.getContentDesc());
+                    } else {
+                        return "Request saved to database successfully";
+                    }
                 }
+                else{
+                    logger.info( "Failed: Record Found in Database with same URL and Content description");
+                    return "Failed: Record Found in Database with same URL and Content description";
+                }
+
             } else {
                 if((contentManagement.getContentURL().isEmpty()  || contentManagement.getContentDesc().isEmpty()))
                     return "Error occurred: Cannot save the content with no Title or URL";
@@ -63,6 +70,10 @@ public class ContentRequestDaoImpl implements ContentRequestDao {
             e.printStackTrace();
             return false;
         }
+    }
+    public Integer countRecords(ContentManagement contentManagement){
+        String contentId = "SELECT(COUNT(*)) FROM TBL_CONTENT_MANAGEMENT where CONTENT_DESC = ? AND CONTENT_URL = ?";
+        return jdbcTemplate.queryForObject(contentId, new Object[]{contentManagement.getContentDesc(), contentManagement.getContentURL()}, Integer.class);
     }
 
 }
