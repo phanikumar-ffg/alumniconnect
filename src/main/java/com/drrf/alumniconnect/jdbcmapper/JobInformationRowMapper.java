@@ -17,7 +17,7 @@ public class JobInformationRowMapper implements RowMapper<JobInformation> {
 		 jobs.setCompanyName(resultSet.getString("COMPANY_NAME"));
 		 jobs.setJobDescription(resultSet.getString("JOB_DESCRIPTION"));
 		 jobs.setDesignation(resultSet.getString("DESIGNATION"));
-           
+		 jobs.setCityName(resultSet.getString("CITY_NAME"));
          return jobs;
 	}
 

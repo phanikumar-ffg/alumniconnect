@@ -8,6 +8,7 @@ public class JobInformation {
 	private String COMPANY_NAME;
 	private String JOB_DESCRIPTION;
 	private long CITY_ID;
+	private String CITY_NAME;
 	private long VACANCY_COUNT;
 	private String DESIGNATION;
 	private String QUALIFICATION_REQ;
@@ -44,6 +45,12 @@ public class JobInformation {
 	public void setCityId(long cityId){
 		this.CITY_ID=cityId;
 	}
+	public String getCityName(){
+		return CITY_NAME;
+	}
+	public void setCityName(String city){
+		this.CITY_NAME=city;
+	}
 	public long getVacancyCount(){
 		return VACANCY_COUNT;
 	}
@@ -66,7 +73,7 @@ public class JobInformation {
 	@Override
 	public String toString() {
 		return "JobInformation [jobId=" + JOB_ID + ", companyName=" + COMPANY_NAME + ", designation=" + DESIGNATION + ", jobDescription="
-				+ JOB_DESCRIPTION + ", cityId=" + CITY_ID + ", vacancyCount=" + VACANCY_COUNT + ",qualificationReq="+ QUALIFICATION_REQ + ",createDate=" + CREATE_TIMESTAMP +"]";
+				+ JOB_DESCRIPTION + ", cityId=" + CITY_ID + ", cityName=" + CITY_NAME+", vacancyCount=" + VACANCY_COUNT + ",qualificationReq="+ QUALIFICATION_REQ + ",createDate=" + CREATE_TIMESTAMP +"]";
 	}
 	
 }
