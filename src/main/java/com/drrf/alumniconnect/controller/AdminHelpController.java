@@ -48,7 +48,11 @@ public class AdminHelpController {
             return Response.status(Response.Status.BAD_REQUEST).entity(error.toString()).build();
         }
         catch(Exception e){
-            return Response.status(Response.Status.BAD_REQUEST).type("ERROR GETTING_RESPONSE").build();
+            JsonObject error = new JsonObject();
+            error.addProperty(APIUtils.ERROR_MESSAGE, e.getLocalizedMessage());
+//            return Response.status(Response.Status.BAD_REQUEST).type("ERROR GETTING_RESPONSE").build();
+            return Response.status(Response.Status.BAD_REQUEST).entity(error.toString()).build();
+
         }
 
     }
