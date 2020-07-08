@@ -20,6 +20,7 @@ public class JerseyConfig extends ResourceConfig {
 		register(CorsConfigurationDrf.class);
         register(CityDetailsController.class);
 		register(AdminHelpController.class);
+		register(ProfileInformationController.class);
 
 
 	}
