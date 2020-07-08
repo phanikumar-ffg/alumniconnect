@@ -36,6 +36,9 @@ public class HelpHistoryDaoImpl implements HelpHistoryDao {
             int i = jdbcTemplate.update(sql, new Object[] { helpHistory.getAspirantId(), helpHistory.getReason(), helpHistory.getDetails(), helpHistory.getCenterId(), sqlTime,helpHistory.getDescription() });
           //  String st = "INSERT INTO DRF.TBL_ADMIN_HELP_REQUEST_STATUS (STATUS,CREATE_TIMESTAMP,STUDENT_ID) VALUES(?,?,?)";
             //jdbcTemplate.update(st,new Object[] {"New",sqlTime,helpHistory.getStudentId()});
+            String sql1 = "INSERT INTO TBL_ADMIN_HELP_REQUEST_STATUS (ASPIRANT_ID,STATUS,CREATE_TIMESTAMP) VALUES (?,?,?)";
+            jdbcTemplate.update(sql1,  helpHistory.getAspirantId(),"New",sqlTime);
+
             System.out.println("The value of i"+i);
             if (i == 0) {
                 throw new HelpHistoryDaoException("Error occured while saving user help information" + helpHistory.getAspirantId());
