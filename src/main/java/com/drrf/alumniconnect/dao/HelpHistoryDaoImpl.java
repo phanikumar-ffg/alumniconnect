@@ -4,6 +4,7 @@ package com.drrf.alumniconnect.dao;
 import com.drrf.alumniconnect.exceptions.HelpHistoryDaoException;
 import com.drrf.alumniconnect.jdbcmapper.HelpDetailsRowMapper;
 import com.drrf.alumniconnect.jdbcmapper.LoginDetailsRowMapper;
+import com.drrf.alumniconnect.model.AdminHelpRequestStatus;
 import com.drrf.alumniconnect.model.HelpDetails;
 import com.drrf.alumniconnect.model.HelpHistory;
 import com.drrf.alumniconnect.model.Mail;
@@ -12,6 +13,8 @@ import com.drrf.alumniconnect.utils.APIUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -31,13 +34,34 @@ public class HelpHistoryDaoImpl implements HelpHistoryDao {
         try {
             java.util.Date date=new java.util.Date();
             Timestamp sqlTime=new Timestamp(date.getTime());
+            long id=helpHistory.getAspirantId();
             logger.info("Inserting a new help request with Reason{}, Details{}, Description{} for student Id{}",helpHistory.getReason(), helpHistory.getDetails(),helpHistory.getDescription(),helpHistory.getAspirantId());
             String sql = "INSERT INTO tbl_help_history (ASPIRANT_ID,REASON,DETAILS,CENTRE_ID,CREATE_TIMESTAMP,DESCRIPTION) VALUES (?,?,?,?,?,?)";
             int i = jdbcTemplate.update(sql, new Object[] { helpHistory.getAspirantId(), helpHistory.getReason(), helpHistory.getDetails(), helpHistory.getCenterId(), sqlTime,helpHistory.getDescription() });
-          //  String st = "INSERT INTO DRF.TBL_ADMIN_HELP_REQUEST_STATUS (STATUS,CREATE_TIMESTAMP,STUDENT_ID) VALUES(?,?,?)";
-            //jdbcTemplate.update(st,new Object[] {"New",sqlTime,helpHistory.getStudentId()});
-            String sql1 = "INSERT INTO TBL_ADMIN_HELP_REQUEST_STATUS (ASPIRANT_ID,STATUS,CREATE_TIMESTAMP) VALUES (?,?,?)";
-            jdbcTemplate.update(sql1,  helpHistory.getAspirantId(),"New",sqlTime);
+
+            logger.info("Checking if ASPIRANT already made a Help Request ");
+            String que = "SELECT ASPIRANT_ID from TBL_ADMIN_HELP_REQUEST_STATUS WHERE ASPIRANT_ID='" + id + "'";
+            AdminHelpRequestStatus admin=jdbcTemplate.query(que,(resultSet ->
+            {if(resultSet.next()){
+                AdminHelpRequestStatus ad=new AdminHelpRequestStatus();
+                ad.setAspirantId(resultSet.getLong("ASPIRANT_ID"));
+                return ad;
+            }
+            else{
+                return null;
+            }}));
+            System.out.print(admin);
+            if (admin==null) {
+                logger.info("Inserted help request in AdminHelpRequestStatus Table");
+                String sql1 = "INSERT  TBL_ADMIN_HELP_REQUEST_STATUS (ASPIRANT_ID,REASON,DETAILS,CENTRE_ID,DESCRIPTION,STATUS,CREATE_TIMESTAMP) VALUES (?,?,?,?,?,?,?)";
+                jdbcTemplate.update(sql1, helpHistory.getAspirantId(), helpHistory.getReason(), helpHistory.getDetails(), helpHistory.getCenterId(), helpHistory.getDescription(), "New", sqlTime);
+
+            } else {
+                logger.info("Updated help request in AdminHelpRequest Table");
+                String sql2 = "UPDATE  TBL_ADMIN_HELP_REQUEST_STATUS SET REASON=?,DETAILS=?,CENTRE_ID=?,DESCRIPTION=?,STATUS=?,CREATE_TIMESTAMP=? WHERE ASPIRANT_ID='" + id + "'";
+                jdbcTemplate.update(sql2, helpHistory.getReason(), helpHistory.getDetails(), helpHistory.getCenterId(), helpHistory.getDescription(), "New", sqlTime);
+            }
+
 
             System.out.println("The value of i"+i);
             if (i == 0) {
