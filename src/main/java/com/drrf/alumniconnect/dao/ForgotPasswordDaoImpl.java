@@ -55,7 +55,7 @@ public class ForgotPasswordDaoImpl implements ForgotPasswordDao {
 				//write the code to send details to email and phone
 				//need smtp details
 				String emailBody= "Dr Reddy's Foundation welcome you,\n\nYour request for password deteails is successful. Please find the details below.\n\n\n"
-						+ "User ID: "+loginDetails.getUserName()+" \nPassword: "+loginDetails.getPassword()+"\n \n Regards,\n Dr Reddy Foundation";
+						+ "User ID:  \nPassword: "+loginDetails.getPassword()+"\n \n Regards,\n Dr Reddy Foundation";
 				
 		        Mail mail = new Mail();
 		        mail.setMailFrom(APIUtils.MAIL_FROM);
@@ -64,7 +64,7 @@ public class ForgotPasswordDaoImpl implements ForgotPasswordDao {
 		        mail.setMailContent(emailBody);
 		        mailService.sendEmail(mail);
 		        
-				message ="Your login ID and password is sent to your email ID:"+ loginDetails.getUserName() +" and registered mobile number. If you don't get the details in 5 min, please contact the admin. Admin E-mail ID: abc@gmail.com";
+				message ="Your login ID and password is sent to your email ID: and registered mobile number. If you don't get the details in 5 min, please contact the admin. Admin E-mail ID: abc@gmail.com";
 			}
 		} catch (ForgotPasswordDaoException e) {
 			throw e;

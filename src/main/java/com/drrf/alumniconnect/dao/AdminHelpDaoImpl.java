@@ -29,24 +29,24 @@ public class AdminHelpDaoImpl implements AdminHelpDao {
 
         List<Map<String, Object>> listmap = new ArrayList<Map<String, Object>>();
 
-        String query = "Select hh.STUDENT_ID ,up.FIRST_NAME,hh.REASON,hh.DETAILS,up.MOBILE_INT,aars.STATUS from drf.tbl_help_history hh" +
+       /* String query = "Select hh.STUDENT_ID ,up.FIRST_NAME,hh.REASON,hh.DETAILS,up.MOBILE_INT,aars.STATUS from drf.tbl_help_history hh" +
                 " INNER JOIN drf.tbl_profile_data up ON hh.STUDENT_ID=up.STUDENT_ID" +
                 " INNER JOIN drf.tbl_admin_help_request_status aars ON up.STUDENT_ID=aars.STUDENT_ID ORDER BY hh.STUDENT_ID";
 //          String query="select * from drf.tbl_help_history";
 
         List<AdminHelpRequests> result = jdbcTemplate.query(query, (rs, arg1) -> {
             HelpHistory hh = new HelpHistory();
-            hh.setStudentId(rs.getLong("STUDENT_ID"));
+          *//*  hh.setStudentId(rs.getLong("STUDENT_ID"));
             hh.setReason(rs.getString("REASON"));
             hh.setDetails(rs.getString("DETAILS"));
             UserProfile up = new UserProfile();
             up.setStudentId(rs.getLong("STUDENT_ID"));
             up.setFirstName(rs.getString("FIRST_NAME"));
-            up.setMobile(rs.getLong("MOBILE_INT"));
+            up.setMobile(rs.getLong("MOBILE_INT"));*//*
             AdminHelpRequestStatus ahrs=new AdminHelpRequestStatus();
             ahrs.setStudentId(rs.getLong("STUDENT_ID"));
             ahrs.setStatus(rs.getString("STATUS"));
-            return new AdminHelpRequests(hh, up,ahrs);
+            return new AdminHelpRequests(hh,ahrs);
         });
         result.forEach(r -> {
             Map<String, Object> map = new HashMap<String, Object>();
@@ -65,7 +65,7 @@ public class AdminHelpDaoImpl implements AdminHelpDao {
 //                JdbcMapperFactory
 //                        .newInstance()
 //                        .addKeys("hh.STUDENT_ID","up.STUDENT_ID" )
-//                        .newMapper(AdminHelpRequests.class);
+//                        .newMapper(AdminHelpRequests.class);*/
         return listmap;
     }
 
