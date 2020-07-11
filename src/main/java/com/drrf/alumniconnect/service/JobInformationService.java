@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface JobInformationService {
 
-	public List<JobInformation> getJobs(Long student_id) throws Exception;
+	public List<JobInformation> getJobs(Long studentId) throws Exception;
 	public String saveJobEntryDetails(JobInformation jobInformation) throws JobInformationDaoException;
 
 }

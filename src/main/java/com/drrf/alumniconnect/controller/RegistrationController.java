@@ -1,7 +1,6 @@
 package com.drrf.alumniconnect.controller;
 
-import com.drrf.alumniconnect.exceptions.UserNotFoundDaoException;
-import com.drrf.alumniconnect.model.LoginDetails;
+
 import com.drrf.alumniconnect.model.UserProfile;
 import com.drrf.alumniconnect.service.RegistrationService;
 import com.drrf.alumniconnect.utils.APIUtils;
@@ -32,7 +31,6 @@ public class RegistrationController {
         } catch (Exception e) {
             JsonObject error = new JsonObject();
             error.addProperty(APIUtils.ERROR_MESSAGE, e.getLocalizedMessage());
-            //return Response.status(Status.INTERNAL_SERVER_ERROR).build();
             return Response.status(Response.Status.BAD_REQUEST).entity(error.toString()).build();
         }
     }
@@ -46,7 +44,6 @@ public class RegistrationController {
         } catch (Exception e) {
             JsonObject error = new JsonObject();
             error.addProperty(APIUtils.ERROR_MESSAGE, e.getLocalizedMessage());
-            //return Response.status(Status.INTERNAL_SERVER_ERROR).build();
             return Response.status(Response.Status.BAD_REQUEST).entity(error.toString()).build();
         }
     }

@@ -1,20 +1,15 @@
 package com.drrf.alumniconnect.dao;
 
 import com.drrf.alumniconnect.exceptions.ContentNotFoundDaoException;
-import com.drrf.alumniconnect.exceptions.UserNotFoundDaoException;
 import com.drrf.alumniconnect.jdbcmapper.ContentManagementRowMapper;
-import com.drrf.alumniconnect.jdbcmapper.LoginDetailsRowMapper;
-import com.drrf.alumniconnect.jdbcmapper.UserProfileRowMapper;
 import com.drrf.alumniconnect.model.ContentManagement;
-import com.drrf.alumniconnect.model.LoginDetails;
-import com.drrf.alumniconnect.model.UserProfile;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.util.Map;
 
 @Repository
 public class DeleteContentDaoImpl implements DeleteContentDao{
@@ -40,8 +35,8 @@ public class DeleteContentDaoImpl implements DeleteContentDao{
                 throw new ContentNotFoundDaoException( "No Content is found in the Database with selected title: " + contentManagement.getContentDesc());
 
             }else {
-                String sql_delete_content = "DELETE FROM TBL_CONTENT_MANAGEMENT WHERE CONTENT_ID = ?";
-                int i = jdbcTemplate.update(sql_delete_content, new Object[]{content.getContentId()});
+                String sqlDeleteContent = "DELETE FROM TBL_CONTENT_MANAGEMENT WHERE CONTENT_ID = ?";
+                int i = jdbcTemplate.update(sqlDeleteContent, new Object[]{content.getContentId()});
                 if (i == 0) {
                     throw new ContentNotFoundDaoException("Error occurred while deleting Content information: " + contentManagement.getContentDesc());
                 } else {

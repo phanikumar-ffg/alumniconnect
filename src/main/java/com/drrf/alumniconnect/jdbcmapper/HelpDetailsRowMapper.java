@@ -1,7 +1,6 @@
 package com.drrf.alumniconnect.jdbcmapper;
 
 import com.drrf.alumniconnect.model.HelpDetails;
-import com.drrf.alumniconnect.model.HelpHistory;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;

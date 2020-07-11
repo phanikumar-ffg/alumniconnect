@@ -15,7 +15,7 @@ import com.drrf.alumniconnect.model.UserProfile;
 
 @Repository
 public class LoginDaoImpl implements LoginDao{
-	private static final Logger logger = LoggerFactory.getLogger(LoginDao.class);
+	private static final Logger logger = LoggerFactory.getLogger(LoginDaoImpl.class);
 	@Autowired
     private JdbcTemplate jdbcTemplate;
 
@@ -25,17 +25,17 @@ public class LoginDaoImpl implements LoginDao{
 		UserProfile userProfile= null;
 		logger.info("Validating the user Information:"+user.getEmailId());
 		try {
-			String sql_authentication = "SELECT sr_no ,email_id ,password,create_timestamp,update_timestamp FROM tbl_login_details where email_id = ? and password= ?";
+			String sqlAuthentication = "SELECT sr_no ,email_id ,password,create_timestamp,update_timestamp FROM tbl_login_details where email_id = ? and password= ?";
 
-			loginDetails = jdbcTemplate.queryForObject(sql_authentication, new Object[]{user.getEmailId(),user.getPassword()}, new LoginDetailsRowMapper());
+			loginDetails = jdbcTemplate.queryForObject(sqlAuthentication, new Object[]{user.getEmailId(),user.getPassword()}, new LoginDetailsRowMapper());
 
 			if (loginDetails == null ) {
 				logger.info("User information not available in login details table:"+user.getEmailId());
 				throw new UserNotFoundDaoException( "User Id or password not valid");
 			}else {
-				String sql_user_profile = "select pd.aspirant_id, pd.first_name, pd.last_name, pd.email_id, pd.phone, pd.dob, pd.current_organization, pd.city_id,ctd.city_name, pd.centre_id, cd.centre_name, pd.is_admin "
+				String sqlUserProfile = "select pd.aspirant_id, pd.first_name, pd.last_name, pd.email_id, pd.phone, pd.dob, pd.current_organization, pd.city_id,ctd.city_name, pd.centre_id, cd.centre_name, pd.is_admin "
 						+ "from alumniconnect.tbl_profile_data pd inner join tbl_centre_details cd on (pd.centre_id= cd.centre_id) inner join tbl_city_details ctd on (pd.city_id = ctd.city_id) where pd.email_id=?";
-				userProfile = jdbcTemplate.queryForObject(sql_user_profile, new Object[]{loginDetails.getEmailId()}, new UserProfileRowMapper());
+				userProfile = jdbcTemplate.queryForObject(sqlUserProfile, new Object[]{loginDetails.getEmailId()}, new UserProfileRowMapper());
 			}
 		} catch (UserNotFoundDaoException | DataAccessException e) {
 			throw new UserNotFoundDaoException( "User Id or password not valid");

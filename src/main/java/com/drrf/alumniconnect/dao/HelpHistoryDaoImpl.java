@@ -3,7 +3,6 @@ package com.drrf.alumniconnect.dao;
 
 import com.drrf.alumniconnect.exceptions.HelpHistoryDaoException;
 import com.drrf.alumniconnect.jdbcmapper.HelpDetailsRowMapper;
-import com.drrf.alumniconnect.jdbcmapper.LoginDetailsRowMapper;
 import com.drrf.alumniconnect.jdbcmapper.UserNameRowMapper;
 import com.drrf.alumniconnect.model.AdminHelpRequestStatus;
 import com.drrf.alumniconnect.model.HelpDetails;
@@ -15,8 +14,6 @@ import com.drrf.alumniconnect.utils.APIUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 

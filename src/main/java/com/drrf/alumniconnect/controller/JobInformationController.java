@@ -37,10 +37,10 @@ public class JobInformationController {
 	@Path("/jobs/{student_id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response getAllJobs(@PathParam(value = "student_id")Long student_id) { 
-		logger.info("Received request for Jobs by aspirant: "+ student_id);
+	public Response getAllJobs(@PathParam(value = "student_id")Long studentId) {
+		logger.info("Received request for Jobs by aspirant: "+ studentId);
 		try {
-			return Response.ok().entity(JobInfoService.getJobs(student_id)).build();
+			return Response.ok().entity(JobInfoService.getJobs(studentId)).build();
 		} catch (Exception e) {	
 			logger.error("Error: "+e.getLocalizedMessage());
 			return Response.status(Status.BAD_REQUEST).entity("error in retrieving jobs").build();
@@ -58,7 +58,7 @@ public class JobInformationController {
 		"Student_Name: "+job.getStudentName()+"\nStudent_Email: "+job.getStudentEmail());
 		try {
 			String resMessage = JobReqService.sendJobRequest(job);
-			if (resMessage == "Sending Job Request Failed"){
+			if (resMessage.equals("Sending Job Request Failed") ){
 				throw new Exception(resMessage);
 			}
 			return Response.ok().entity(resMessage).build();
