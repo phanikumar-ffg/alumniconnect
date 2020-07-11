@@ -37,13 +37,13 @@ public class ContentManagementController {
     public Response getContentManagementDetails() {
         logger.info("Request to get all the information for Content Management");
         try {
+
             return Response.ok().entity(contentManagementService.getAllContentInformation()).build();
         } catch (Exception e) {
             return Response.status(Response.Status.BAD_REQUEST).entity("error").build();
         }
-
-
     }
+
 
 
     @POST
@@ -53,14 +53,17 @@ public class ContentManagementController {
 	public Response contentRequest(@RequestBody ContentManagement content) {
         logger.info("Received a content Management request");
         try {
-            return Response.ok().entity(contentRequestService.sendContentRequest(content)).build();
+            String responseMessage = contentRequestService.sendContentRequest(content);
+            if(responseMessage == "Request saved to database successfully") {
+                return Response.ok().entity(responseMessage).build();
+            }
+            else
+                throw new Exception(responseMessage);
         } catch (Exception e) {
-            JsonObject error = new JsonObject();
+            JsonObject error=new JsonObject();
             error.addProperty(APIUtils.ERROR_MESSAGE, e.getLocalizedMessage());
-            //return Response.status(Status.INTERNAL_SERVER_ERROR).build();
-            return Response.status(Response.Status.BAD_REQUEST).entity(error.toString()).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(error.toString()).build();
         }
-
     }
     @POST
     @Path("/content/delete")
@@ -69,12 +72,16 @@ public class ContentManagementController {
     public Response contentDelete(@RequestBody ContentManagement content) {
         logger.info("Deleting content Management request");
         try {
-              return Response.ok().entity(deleteContentService.deleteContentRequest (content)).build();
+            String responseMessage = deleteContentService.deleteContentRequest (content);
+            if(responseMessage == "Request deleted from database successfully") {
+                return Response.ok().entity(responseMessage).build();
+            }
+            else
+                throw new Exception(responseMessage);
         } catch (Exception e) {
-            JsonObject error = new JsonObject();
+            JsonObject error=new JsonObject();
             error.addProperty(APIUtils.ERROR_MESSAGE, e.getLocalizedMessage());
-            //return Response.status(Status.INTERNAL_SERVER_ERROR).build();
-            return Response.status(Response.Status.BAD_REQUEST).entity(error.toString()).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(error.toString()).build();
         }
 
     }

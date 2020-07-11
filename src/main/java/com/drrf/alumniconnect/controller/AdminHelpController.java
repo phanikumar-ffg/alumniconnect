@@ -1,5 +1,6 @@
 package com.drrf.alumniconnect.controller;
 
+import com.drrf.alumniconnect.exceptions.AdminHelpRequestDaoException;
 import com.drrf.alumniconnect.exceptions.ForgotPasswordDaoException;
 import com.drrf.alumniconnect.model.AdminHelpRequestStatus;
 import com.drrf.alumniconnect.service.AdminHelpService;
@@ -36,42 +37,31 @@ public class AdminHelpController {
     public Response getAdminHelpRequests() {
         try {
             return Response.ok().entity(adminHelpService.getAllHelpRequests()).build();
-        } catch (ForgotPasswordDaoException e) {
+        } catch (AdminHelpRequestDaoException e) {
             JsonObject error = new JsonObject();
             error.addProperty(APIUtils.ERROR_MESSAGE, e.getLocalizedMessage());
             //return Response.status(Status.INTERNAL_SERVER_ERROR).build();
             return Response.status(Response.Status.BAD_REQUEST).entity(error.toString()).build();
-        } catch (AuthenticationFailedException e) {
-            JsonObject error = new JsonObject();
-            error.addProperty(APIUtils.ERROR_MESSAGE, e.getLocalizedMessage());
-            //return Response.status(Status.INTERNAL_SERVER_ERROR).build();
-            return Response.status(Response.Status.BAD_REQUEST).entity(error.toString()).build();
-        }
-        catch(Exception e){
-            return Response.status(Response.Status.BAD_REQUEST).type("ERROR GETTING_RESPONSE").build();
         }
 
-    }
+        }
+
+
 
     @PUT
     @Path("/update/{Student_Id}/{Status}")
     public Response updateStatusOfAdminHelpRequest(@PathParam("Student_Id") String Student_Id,@PathParam("Status") String Status){
         try{
             AdminHelpRequestStatus adminHelpRequestStatus=new AdminHelpRequestStatus();
-            adminHelpRequestStatus.setStudentId(Integer.parseInt(Student_Id));
+            adminHelpRequestStatus.setAspirantId(Integer.parseInt(Student_Id));
             adminHelpRequestStatus.setStatus(Status);
             return Response.ok().entity(adminHelpService.updateAdminHelpStatus(adminHelpRequestStatus)).build();
         }
-        catch (ForgotPasswordDaoException e) {
+        catch (AdminHelpRequestDaoException e) {
             JsonObject error = new JsonObject();
             error.addProperty(APIUtils.ERROR_MESSAGE, e.getLocalizedMessage());
             //return Response.status(Status.INTERNAL_SERVER_ERROR).build();
-            return Response.status(Response.Status.BAD_REQUEST).type("ERROR GETTING_RESPONSE").build();
-        } catch (AuthenticationFailedException e) {
-            JsonObject error = new JsonObject();
-            error.addProperty(APIUtils.ERROR_MESSAGE, e.getLocalizedMessage());
-            //return Response.status(Status.INTERNAL_SERVER_ERROR).build();
-            return Response.status(Response.Status.BAD_REQUEST).type("ERROR GETTING_RESPONSE").build();
+            return Response.status(Response.Status.BAD_REQUEST).entity(error.toString()).build();
         }
     }
 
