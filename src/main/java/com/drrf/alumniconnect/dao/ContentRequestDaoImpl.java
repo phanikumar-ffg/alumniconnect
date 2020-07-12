@@ -18,7 +18,7 @@ import java.util.Calendar;
 
 @Repository
 public class ContentRequestDaoImpl implements ContentRequestDao {
-    private static final Logger logger = LoggerFactory.getLogger(ContentManagementDaoImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(ContentRequestDaoImpl.class);
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
@@ -35,7 +35,7 @@ public class ContentRequestDaoImpl implements ContentRequestDao {
                             + contentManagement.getContentType() + "','" + contentManagement.getContentDesc() + "','" + contentManagement.getAssessmentURL() + "','" + contentManagement.getCreateDate() + "')";
                     int i = jdbcTemplate.update(sql);
 
-                    System.out.println("The value of i");
+                    logger.info("The value of i"+i);
                     if (i == 0) {
                         throw new ContentNotFoundDaoException("Error occurred while saving Content information: " + contentManagement.getContentDesc());
                     } else {
@@ -60,9 +60,9 @@ public class ContentRequestDaoImpl implements ContentRequestDao {
             return "Error occurred while saving the information to content management table ";
         }
     }
-    public Boolean checkURL(String Url){
+    public Boolean checkURL(String urlval){
         try{
-            URL url = new URL(Url);
+            URL url = new URL(urlval);
             HttpURLConnection huc = (HttpURLConnection) url.openConnection();
             int responseCode = huc.getResponseCode();
             return (responseCode == 200) ? true : false;

@@ -2,7 +2,6 @@ package com.drrf.alumniconnect.dao;
 
 import com.drrf.alumniconnect.exceptions.CityDetailsDaoException;
 import com.drrf.alumniconnect.model.CityDetails;
-import com.drrf.alumniconnect.model.HelpDetails;
 import com.drrf.alumniconnect.model.StateDetails;
 
 import java.util.List;

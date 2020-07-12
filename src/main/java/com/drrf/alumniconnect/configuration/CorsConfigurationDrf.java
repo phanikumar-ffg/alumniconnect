@@ -18,7 +18,7 @@ public class CorsConfigurationDrf   {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:19006/")
+                        .allowedOrigins("*")
                         .allowedMethods("PUT", "DELETE","GET","POST")
                         .allowCredentials(false).maxAge(3600);
 

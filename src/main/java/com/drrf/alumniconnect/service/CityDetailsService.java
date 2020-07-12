@@ -3,7 +3,7 @@ package com.drrf.alumniconnect.service;
 import com.drrf.alumniconnect.exceptions.CityDetailsDaoException;
 import com.drrf.alumniconnect.model.CityDetails;
 import com.drrf.alumniconnect.model.StateDetails;
-import org.springframework.stereotype.Service;
+
 
 
 import java.util.List;

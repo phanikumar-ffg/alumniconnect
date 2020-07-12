@@ -37,12 +37,10 @@ public class ForgotPasswordController {
 		} catch (ForgotPasswordDaoException e) {	
 			JsonObject error=new JsonObject();
 			error.addProperty(APIUtils.ERROR_MESSAGE, e.getLocalizedMessage());
-			//return Response.status(Status.INTERNAL_SERVER_ERROR).build();
 			return Response.status(Status.BAD_REQUEST).entity(error.toString()).build();
 		}catch (AuthenticationFailedException e) {	
 			JsonObject error=new JsonObject();
 			error.addProperty(APIUtils.ERROR_MESSAGE, e.getLocalizedMessage());
-			//return Response.status(Status.INTERNAL_SERVER_ERROR).build();
 			return Response.status(Status.BAD_REQUEST).entity(error.toString()).build();
 		}
 

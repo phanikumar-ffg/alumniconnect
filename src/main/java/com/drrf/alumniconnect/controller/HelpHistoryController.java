@@ -1,6 +1,6 @@
 package com.drrf.alumniconnect.controller;
 
-import com.drrf.alumniconnect.exceptions.ForgotPasswordDaoException;
+
 import com.drrf.alumniconnect.exceptions.HelpHistoryDaoException;
 import com.drrf.alumniconnect.model.HelpHistory;
 import com.drrf.alumniconnect.service.HelpHistoryService;
@@ -9,10 +9,8 @@ import com.google.gson.JsonObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import javax.mail.AuthenticationFailedException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -51,7 +49,6 @@ public class HelpHistoryController {
         } catch (HelpHistoryDaoException e) {
             JsonObject error=new JsonObject();
             error.addProperty(APIUtils.ERROR_MESSAGE, e.getLocalizedMessage());
-            //return Response.status(Status.INTERNAL_SERVER_ERROR).build();
             return Response.status(Status.BAD_REQUEST).entity(error.toString()).build();
         }
     }

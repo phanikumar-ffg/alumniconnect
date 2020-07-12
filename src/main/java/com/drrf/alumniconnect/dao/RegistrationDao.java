@@ -1,8 +1,6 @@
 package com.drrf.alumniconnect.dao;
 
-import javax.mail.AuthenticationFailedException;
 
-import com.drrf.alumniconnect.exceptions.ForgotPasswordDaoException;
 import com.drrf.alumniconnect.exceptions.RegistrationDaoException;
 import com.drrf.alumniconnect.model.CentreDetails;
 import com.drrf.alumniconnect.model.UserProfile;

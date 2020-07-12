@@ -1,8 +1,6 @@
 package com.drrf.alumniconnect.controller;
 
-import com.drrf.alumniconnect.exceptions.HelpHistoryDaoException;
 import com.drrf.alumniconnect.model.ContentManagement;
-import com.drrf.alumniconnect.model.HelpHistory;
 import com.drrf.alumniconnect.service.ContentManagementService;
 import com.drrf.alumniconnect.service.ContentRequestService;
 import com.drrf.alumniconnect.service.DeleteContentService;
@@ -11,7 +9,6 @@ import com.google.gson.JsonObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.ws.rs.*;

@@ -4,76 +4,76 @@ import java.sql.Timestamp;
 
 public class JobInformation {
 
-	private long JOB_ID;
-	private String COMPANY_NAME;
-	private String JOB_DESCRIPTION;
-	private long CITY_ID;
-	private String CITY_NAME;
-	private long VACANCY_COUNT;
-	private String DESIGNATION;
-	private String QUALIFICATION_REQ;
-	private Timestamp CREATE_TIMESTAMP;
+	private long jobId;
+	private String companyName;
+	private String jobDescription;
+	private long cityId;
+	private String cityName;
+	private long vacancyCount;
+	private String designation;
+	private String qualificationReq;
+	private Timestamp createTimestamp;
 
 	
 	public long getJobId() {
-		return JOB_ID;
+		return jobId;
 	}
 	public void setJobId(long jobId) {
-		this.JOB_ID = jobId;
+		this.jobId = jobId;
 	}
 	public String getCompanyName() {
-		return COMPANY_NAME;
+		return companyName;
 	}
 	public void setCompanyName(String companyName) {
-		this.COMPANY_NAME = companyName;
+		this.companyName = companyName;
 	}
 	public String getJobDescription() {
-		return JOB_DESCRIPTION;
+		return jobDescription;
 	}
 	public void setJobDescription(String jobDescription) {
-		this.JOB_DESCRIPTION = jobDescription;
+		this.jobDescription = jobDescription;
 	}
-	public String getDesignation(){
-		return DESIGNATION;
+	public String getdesignation(){
+		return designation;
 	}
-	public void setDesignation(String designation){
-		this.DESIGNATION=designation;
+	public void setdesignation(String designation){
+		this.designation=designation;
 	}
 	public long getCityId(){
-		return CITY_ID;
+		return cityId;
 	}
 	public void setCityId(long cityId){
-		this.CITY_ID=cityId;
+		this.cityId=cityId;
 	}
 	public String getCityName(){
-		return CITY_NAME;
+		return cityName;
 	}
 	public void setCityName(String city){
-		this.CITY_NAME=city;
+		this.cityName=city;
 	}
 	public long getVacancyCount(){
-		return VACANCY_COUNT;
+		return vacancyCount;
 	}
 	public void setVacancyCount(long vacancyCount){
-		this.VACANCY_COUNT=vacancyCount;
+		this.vacancyCount=vacancyCount;
 	}
 	public String getQualificationReq(){
-		return QUALIFICATION_REQ;
+		return qualificationReq;
 	}
 	public void setQualificationReq(String qualificationReq){
-		this.QUALIFICATION_REQ=qualificationReq;
+		this.qualificationReq=qualificationReq;
 	}
 	public Timestamp getCreateDate() {
-		return CREATE_TIMESTAMP;
+		return createTimestamp;
 	}
 	public void setCreateDate(Timestamp createDate) {
-		this.CREATE_TIMESTAMP = createDate;
+		this.createTimestamp = createDate;
 	}
 
 	@Override
 	public String toString() {
-		return "JobInformation [jobId=" + JOB_ID + ", companyName=" + COMPANY_NAME + ", designation=" + DESIGNATION + ", jobDescription="
-				+ JOB_DESCRIPTION + ", cityId=" + CITY_ID + ", cityName=" + CITY_NAME+", vacancyCount=" + VACANCY_COUNT + ",qualificationReq="+ QUALIFICATION_REQ + ",createDate=" + CREATE_TIMESTAMP +"]";
+		return "JobInformation [jobId=" + jobId + ", companyName=" + companyName + ", designation=" + designation + ", jobDescription="
+				+ jobDescription + ", cityId=" + cityId + ", cityName=" + cityName+", vacancyCount=" + vacancyCount + ",qualificationReq="+ qualificationReq + ",createDate=" + createTimestamp +"]";
 	}
 	
 }

@@ -11,16 +11,16 @@ import com.drrf.alumniconnect.model.JobInformation;
 @Service
 public class JobInformationServiceImpl implements JobInformationService {
 	@Autowired
-	JobInformationDao JobInfoDao;
+	JobInformationDao jobInformationDao;
 
 	@Override
-	public List<JobInformation> getJobs(Long student_id) throws Exception{
-		return JobInfoDao.getJobs(student_id);
+	public List<JobInformation> getJobs(Long studentId) throws Exception{
+		return jobInformationDao.getJobs(studentId);
 	}
 
 	@Override
 	public String saveJobEntryDetails(JobInformation jobInformation) throws JobInformationDaoException {
-		JobInfoDao.saveJobEntryDetails(jobInformation);
+		jobInformationDao.saveJobEntryDetails(jobInformation);
 		return "success";
 	}
 
