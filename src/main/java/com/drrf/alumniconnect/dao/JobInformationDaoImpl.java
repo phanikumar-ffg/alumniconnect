@@ -1,6 +1,6 @@
 package com.drrf.alumniconnect.dao;
 
-import com.drrf.alumniconnect.dao.JobInformationDao;
+
 import com.drrf.alumniconnect.exceptions.JobInformationDaoException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,14 +23,14 @@ public class JobInformationDaoImpl implements JobInformationDao{
     private JdbcTemplate jdbcTemplate;
 
 	@Override
-	public List<JobInformation> getJobs(Long student_id) throws Exception{
+	public List<JobInformation> getJobs(Long studentId) throws Exception{
 		List<JobInformation> jobs = null;
 
         try {
 	    logger.info("Getting jobs from the DB...");
-            final String get_all_jobs = "select tbl_job_information.JOB_ID, tbl_job_information.COMPANY_NAME, tbl_job_information.DESIGNATION, tbl_job_information.JOB_DESCRIPTION, tbl_city_details.CITY_NAME from tbl_job_information INNER Join tbl_city_details on tbl_job_information.CITY_ID = tbl_city_details.CITY_ID where tbl_job_information.JOB_ID not in (select JOB_ID from tbl_job_application_status where ASPIRANT_ID = "+student_id+")";
+            final String get_all_jobs = "select tbl_job_information.JOB_ID, tbl_job_information.COMPANY_NAME, tbl_job_information.DESIGNATION, tbl_job_information.JOB_DESCRIPTION, tbl_city_details.CITY_NAME from tbl_job_information INNER Join tbl_city_details on tbl_job_information.CITY_ID = tbl_city_details.CITY_ID where tbl_job_information.JOB_ID not in (select JOB_ID from tbl_job_application_status where ASPIRANT_ID = "+studentId+")";
 	    jobs = jdbcTemplate.query(get_all_jobs, new JobInformationRowMapper());
-	    logger.info("Successfully recieved jobs from DB for aspirant:"+student_id);
+	    logger.info("Successfully recieved jobs from DB for aspirant:"+studentId);
 
         } catch (Exception e) {
             logger.error("Error: "+e.getLocalizedMessage());
@@ -44,14 +44,14 @@ public class JobInformationDaoImpl implements JobInformationDao{
 		try {
 			java.util.Date date=new java.util.Date();
 			Timestamp sqlTime=new Timestamp(date.getTime());
-			logger.info("Inserting a new  job entry with Company Name{}, Designation{}, City details{}", jobInformation.getCompanyName(), jobInformation.getDesignation(),jobInformation.getCityId());
+			logger.info("Inserting a new  job entry with Company Name{}, Designation{}, City details{}", jobInformation.getCompanyName(), jobInformation.getdesignation(),jobInformation.getCityId());
 			String sql = "INSERT INTO tbl_job_information (COMPANY_NAME,DESIGNATION,JOB_DESCRIPTION,CITY_ID,VACANCY_COUNT,QUALIFICATION_REQ,CREATE_TIMESTAMP) VALUES (?,?,?,?,?,?,?)";
-			int i = jdbcTemplate.update(sql,new Object[]{ jobInformation.getCompanyName(), jobInformation.getDesignation() , jobInformation.getJobDescription() ,jobInformation.getCityId(), jobInformation.getVacancyCount() ,jobInformation.getQualificationReq() , sqlTime});
+			int i = jdbcTemplate.update(sql,new Object[]{ jobInformation.getCompanyName(), jobInformation.getdesignation() , jobInformation.getJobDescription() ,jobInformation.getCityId(), jobInformation.getVacancyCount() ,jobInformation.getQualificationReq() , sqlTime});
 			if(i==0){
 				throw new JobInformationDaoException("Error occurred while saving Job Details"+jobInformation.getJobId());
 			}
 			else {
-				logger.info("Detaiils inserted successfully");
+				logger.info("Details inserted successfully");
 				return "success";
 			}
 		}

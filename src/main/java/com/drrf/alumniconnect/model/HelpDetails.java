@@ -3,7 +3,6 @@ package com.drrf.alumniconnect.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 
-import javax.annotation.Generated;
 import java.sql.Timestamp;
 
 public class HelpDetails {

@@ -1,9 +1,8 @@
 package com.drrf.alumniconnect.dao;
 
-import com.drrf.alumniconnect.exceptions.ForgotPasswordDaoException;
+
 import com.drrf.alumniconnect.exceptions.RegistrationDaoException;
 import com.drrf.alumniconnect.jdbcmapper.CentreDetailsRowMapper;
-import com.drrf.alumniconnect.jdbcmapper.JobInformationRowMapper;
 import com.drrf.alumniconnect.jdbcmapper.LoginDetailsRowMapper;
 import com.drrf.alumniconnect.jdbcmapper.UserProfileRowMapper;
 import com.drrf.alumniconnect.model.*;
@@ -16,7 +15,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import javax.mail.AuthenticationFailedException;
+
 import java.security.SecureRandom;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -28,7 +27,7 @@ import java.util.Random;
 @Repository
 public class RegistrationDaoImpl implements RegistrationDao{
 
-    private static final Logger logger = LoggerFactory.getLogger(JobInformationDao.class);
+    private static final Logger logger = LoggerFactory.getLogger(RegistrationDaoImpl.class);
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
@@ -49,7 +48,6 @@ public class RegistrationDaoImpl implements RegistrationDao{
         UserProfile userProfile1 = null;
         LoginDetails loginDetails;
 
-        String message="";
 
         final String check_login_details = "select * from tbl_login_details where email_id=?";
         try {

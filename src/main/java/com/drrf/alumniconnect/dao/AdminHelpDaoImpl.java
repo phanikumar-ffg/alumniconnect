@@ -81,12 +81,13 @@ public class AdminHelpDaoImpl implements AdminHelpDao {
         if (Status.equals("New")) {
             String st = "UPDATE  TBL_ADMIN_HELP_REQUEST_STATUS SET STATUS=?,CREATE_TIMESTAMP=? WHERE ASPIRANT_ID='" + id + "'";
             jdbcTemplate.update(st, "InProgress",ts);
-            System.out.print("STATUS FROM NEW TO IN PROGRESS");
+            logger.info("STATUS FROM NEW TO IN PROGRESS");
+
         }
         if (Status.equals("InProgress")) {
             String st = "UPDATE TBL_ADMIN_HELP_REQUEST_STATUS SET STATUS=?,CREATE_TIMESTAMP=? WHERE ASPIRANT_ID='" + id + "'";
             jdbcTemplate.update(st,"Attended",ts);
-            System.out.print("STATUS FROM INPROGRESS TO ATTENDED");
+            logger.info("STATUS FROM INPROGRESS TO ATTENDED");
 
         }
         logger.info("Admin HelpRequest successfully updated");

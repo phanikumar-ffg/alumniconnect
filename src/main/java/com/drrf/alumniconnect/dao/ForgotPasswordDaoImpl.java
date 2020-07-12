@@ -51,20 +51,20 @@ public class ForgotPasswordDaoImpl implements ForgotPasswordDao {
 
 			if (loginDetails == null ) {
 				throw new ForgotPasswordDaoException( String.format("User [%s]  information not available in the database", email));
-//			}else {
-//				//write the code to send details to email and phone
-//				//need smtp details
-//				String emailBody= "Dr Reddy's Foundation welcome you,\n\nYour request for password deteails is successful. Please find the details below.\n\n\n"
-//						+ "User ID: "+loginDetails.getUserName()+" \nPassword: "+loginDetails.getPassword()+"\n \n Regards,\n Dr Reddy Foundation";
-//
-//		        Mail mail = new Mail();
-//		        mail.setMailFrom(APIUtils.MAIL_FROM);
-//		        mail.setMailTo(APIUtils.MAIL_TO);
-//		        mail.setMailSubject(APIUtils.MAIL_FORGOT_PWD_SUB);
-//		        mail.setMailContent(emailBody);
-//		        mailService.sendEmail(mail);
-//
-//				message ="Your login ID and password is sent to your email ID:"+ loginDetails.getUserName() +" and registered mobile number. If you don't get the details in 5 min, please contact the admin. Admin E-mail ID: abc@gmail.com";
+			}else {
+				//write the code to send details to email and phone
+				//need smtp details
+				String emailBody= "Dr Reddy's Foundation welcome you,\n\nYour request for password deteails is successful. Please find the details below.\n\n\n"
+						+ "User ID: "+loginDetails.getEmailId()+" \nPassword: "+loginDetails.getPassword()+"\n \n Regards,\n Dr Reddy Foundation";
+
+		        Mail mail = new Mail();
+		        mail.setMailFrom(APIUtils.MAIL_FROM);
+		        mail.setMailTo(APIUtils.MAIL_TO);
+		        mail.setMailSubject(APIUtils.MAIL_FORGOT_PWD_SUB);
+		        mail.setMailContent(emailBody);
+		        mailService.sendEmail(mail);
+
+				message ="Your login ID and password is sent to your email ID:"+ loginDetails.getEmailId() +" and registered mobile number. If you don't get the details in 5 min, please contact the admin. Admin E-mail ID: abc@gmail.com";
 			}
 		} catch (ForgotPasswordDaoException e) {
 			throw e;

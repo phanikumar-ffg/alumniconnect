@@ -1,6 +1,6 @@
 package com.drrf.alumniconnect.dao;
 
-import com.drrf.alumniconnect.dao.CityDetailsDao;
+
 import com.drrf.alumniconnect.jdbcmapper.CityDetailsRowMapper;
 import com.drrf.alumniconnect.jdbcmapper.StateDetailsRowMapper;
 import com.drrf.alumniconnect.model.CityDetails;
@@ -22,13 +22,12 @@ public class CityDetailsDaoImpl implements CityDetailsDao {
     @Override
     public List<CityDetails> getCityDetails(Long stateId) throws CityDetailsDaoException {
         List<CityDetails> list=null;
-        String message="";
         try {
             final String sql = "SELECT * FROM alumniconnect.tbl_city_details where STATE_ID="+stateId;
 
            list = jdbcTemplate.query(sql,  new CityDetailsRowMapper());
-            if(list.size()==0){
-                throw  new CityDetailsDaoException(String.format("City Details not found"));
+            if(list.isEmpty()){
+                throw  new CityDetailsDaoException("City Details not found");
             }
             else {
                 logger.info("Details fetched successfully for City details dropdowns");
@@ -47,8 +46,8 @@ public class CityDetailsDaoImpl implements CityDetailsDao {
         try {
             final String sql = "SELECT * FROM alumniconnect.tbl_state_details";
             list = jdbcTemplate.query(sql,  new StateDetailsRowMapper());
-            if(list.size()==0){
-                throw  new CityDetailsDaoException(String.format("State Details not found"));
+            if(list.isEmpty()){
+                throw  new CityDetailsDaoException("State Details not found");
             }
             else {
                 logger.info("Details fetched successfully for State Details dropdowns");

@@ -2,11 +2,10 @@ package com.drrf.alumniconnect.jdbcmapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
+
 
 import org.springframework.jdbc.core.RowMapper;
 
-import com.drrf.alumniconnect.model.LoginDetails;
 import com.drrf.alumniconnect.model.UserProfile;
 
 public class UserProfileRowMapper implements RowMapper<UserProfile> {
