@@ -27,7 +27,7 @@ public class ContentRequestDaoImpl implements ContentRequestDao {
     @Override
     public String sendContentRequest(ContentManagement contentManagement) throws CannotGetJdbcConnectionException {
         try {
-            if ((!(contentManagement.getContentURL().isEmpty() || contentManagement.getContentDesc().isEmpty()) && checkURL(contentManagement.getContentURL()) && checkURL(contentManagement.getAssessmentURL()))){
+            if ((!(contentManagement.getContentURL().isEmpty() || contentManagement.getContentDesc().isEmpty()) && checkURL(contentManagement.getContentURL()))){
                 if( countRecords(contentManagement) == 0 ){
                     logger.info("Inserting a new content with Content Title {} and URl {} at time {}", contentManagement.getContentDesc(), contentManagement.getContentURL(), timestamp);
                     contentManagement.setCreateDate(timestamp);
