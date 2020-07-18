@@ -47,52 +47,57 @@ public class RegistrationDaoImpl implements RegistrationDao{
     public UserProfile newUserRegistration(UserProfile userProfile) throws RegistrationDaoException {
         UserProfile userProfile1 = null;
         LoginDetails loginDetails;
-
-
-        final String check_login_details = "select * from tbl_login_details where email_id=?";
+        final String check_profile_details = "select * from tbl_profile_data pd inner join tbl_centre_details cd on (pd.centre_id= cd.centre_id) inner join tbl_city_details ctd on (pd.city_id = ctd.city_id) where (pd.aspirant_id=? and pd.email_id=?) or (pd.aspirant_id=? and pd.phone=?) or (pd.email_id=? and pd.phone=?)";
         try {
-            loginDetails = jdbcTemplate.queryForObject(check_login_details, new Object[]{userProfile.getEmailId()}, new LoginDetailsRowMapper());
-            logger.info("Account already exists for email id:"+userProfile.getEmailId());
-
-            return null;
-        }
-        catch (EmptyResultDataAccessException e) {
-            logger.info(e.getLocalizedMessage()+": while collecting login details");
-            final String check_profile_details = "select * from tbl_profile_data pd inner join tbl_centre_details cd on (pd.centre_id= cd.centre_id) inner join tbl_city_details ctd on (pd.city_id = ctd.city_id) where pd.aspirant_id=? and pd.first_name=? and pd.dob=?";
+            userProfile1 = jdbcTemplate.queryForObject(check_profile_details, new Object[]{userProfile.getAspirantId(), userProfile.getEmailId(), userProfile.getAspirantId(), userProfile.getPhone(), userProfile.getEmailId(), userProfile.getPhone(),/*new SimpleDateFormat("yyyy-MM-dd").format(userProfile.getDob())*/}, new UserProfileRowMapper());
+            logger.info("Profile Details Matched...Creating account for " + userProfile1.getEmailId());
+            final String check_login_details = "select * from tbl_login_details where email_id=?";
             try {
-                userProfile1 = jdbcTemplate.queryForObject(check_profile_details, new Object[]{userProfile.getAspirantId(),userProfile.getFirstName(),/*userProfile.getCenterId(),*/new SimpleDateFormat("yyyy-MM-dd").format(userProfile.getDob())}, new UserProfileRowMapper());
-                String dt=new SimpleDateFormat("yyyy-MM-dd").format(userProfile.getDob());
+                loginDetails = jdbcTemplate.queryForObject(check_login_details, new Object[]{userProfile.getEmailId()}, new LoginDetailsRowMapper());
+                logger.info("Account already exists for email id:" + userProfile1.getEmailId());
 
-                logger.info("Profile Details Matched...Creating account for "+userProfile.getEmailId());
-                    final String insert_login_details = "insert into tbl_login_details(email_id,password,create_timestamp,update_timestamp) values(?,?,?,?)";
-
-                    Calendar cal = Calendar.getInstance();
-                    Date date = cal.getTime();
-                    String strDateFormat = "YYYY-MM-DD hh:mm:ss a";
-                    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                    String formattedDate = dateFormat.format(date);
-                    String pass = generatePassword(8);
-                    //System.out.println(pass);
-                    jdbcTemplate.update(insert_login_details, userProfile.getEmailId(), pass, formattedDate, formattedDate);
-                    String emailBody = "New User Registration\n\nPlease find the details below.\n\n\n"
-                            + "User ID: " + userProfile.getAspirantId() + " \nPassword: " + pass;
-                logger.info("Account created for user "+userProfile.getEmailId());
-                    Mail mail = new Mail();
-                    mail.setMailFrom(APIUtils.MAIL_FROM);
-                    mail.setMailTo(/*userProfile1.getEmail()*/APIUtils.MAIL_TO);
-                    mail.setMailSubject(APIUtils.MAIL_NEW_USR_SUB);
-                    mail.setMailContent(emailBody);
-                    mailService.sendEmail(mail);
-                logger.info( "User Account created Successfully!!Details sent to registered mail "+userProfile.getEmailId());
-                    return userProfile1;
-            }
-            catch (EmptyResultDataAccessException ex) {
-                logger.info(ex.getLocalizedMessage()+": while collecting profile details");
                 return null;
-            } catch (Exception e1){
-                logger.error(e1.getLocalizedMessage(),e1);
-                throw new RegistrationDaoException("Error occured while saving userDetails for user:"+userProfile.getAspirantId()+"."+e1.getLocalizedMessage());
+            } catch (EmptyResultDataAccessException e) {
+                String dt = new SimpleDateFormat("yyyy-MM-dd").format(userProfile1.getDob());
+                final String insert_login_details = "insert into tbl_login_details(email_id,password,create_timestamp,update_timestamp) values(?,?,?,?)";
+                Calendar cal = Calendar.getInstance();
+                Date date = cal.getTime();
+                String strDateFormat = "YYYY-MM-DD hh:mm:ss a";
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String formattedDate = dateFormat.format(date);
+                String pass = generatePassword(8);
+                //System.out.println(pass);
+                jdbcTemplate.update(insert_login_details, userProfile1.getEmailId(), pass, formattedDate, formattedDate);
+                    /*String emailBody = "New User Registration\n\nPlease find the details below.\n\n\n"
+                            + "User ID: " + userProfile.getAspirantId() + " \nPassword: " + pass;*/
+                String emailBody = "Dear " + userProfile1.getFirstName() + ",\n\n" +
+                        "Your Registration for the DRF application is successful and your login credentials are as below." +
+                        "Please reset your password after the initial login using the change password functionality.\n\n"
+                        + "Login Id - " + userProfile1.getEmailId() +
+                        "\nPwd - " + pass + "\n\nRegards\nTeam DRF Grow\n";
+                logger.info("Account created for user " + userProfile1.getEmailId());
+                Mail mail = new Mail();
+                mail.setMailFrom(APIUtils.MAIL_FROM);
+                mail.setMailTo(/*userProfile1.getEmail()*/APIUtils.MAIL_TO);
+                mail.setMailSubject(APIUtils.MAIL_NEW_USR_SUB);
+                mail.setMailContent(emailBody);
+                mailService.sendEmail(mail);
+                logger.info("User Account created Successfully!!Details sent to registered mail " + userProfile1.getEmailId());
+                return userProfile1;
             }
+            catch (Exception e1){
+                logger.error(e1.getLocalizedMessage(),e1);
+                throw new RegistrationDaoException("Error occured while saving userDetails for user:"+userProfile1.getAspirantId()+"."+e1.getLocalizedMessage());
+            }
+        }
+        catch (EmptyResultDataAccessException ex) {
+            logger.info(ex.getLocalizedMessage()+": while collecting profile details.Profile Details doesn't match");
+            return null;
+
+        }
+        catch (Exception e1){
+            logger.error(e1.getLocalizedMessage(),e1);
+            throw new RegistrationDaoException("Error occured while checking profile details user:"+userProfile.getAspirantId()+"."+e1.getLocalizedMessage());
         }
     }
 
