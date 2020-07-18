@@ -18,8 +18,7 @@ public class CorsConfigurationDrf   {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-
-                        .allowedOrigins("http://localhost:19006/")
+                        .allowedOrigins("*")
                         .allowedMethods("PUT", "DELETE","GET","POST")
                         .allowCredentials(false).maxAge(3600);
 
@@ -30,7 +29,8 @@ public class CorsConfigurationDrf   {
 public FilterRegistrationBean corsFilter() {
     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
     CorsConfiguration config = new CorsConfiguration();
-    config.addAllowedOrigin("http://localhost:19006");
+    config.setAllowCredentials(true);
+    config.addAllowedOrigin("*");
     config.addAllowedHeader("*");
     config.addAllowedMethod("*");
     source.registerCorsConfiguration("/**", config);
