@@ -69,12 +69,12 @@ public class HelpHistoryDaoImpl implements HelpHistoryDao {
             } else {
                String emailBody = "Dear Admin,\n\n A help request has been initialized by"+userProfile1.getFirstName()+userProfile1.getLastName()+" (Aspirant Id-" + + helpHistory.getAspirantId() + ") and the details of the request are as follows: \n\n Problem Type-" + helpHistory.getReason() + "\n Problem Description-" + helpHistory.getDetails() + "\n Additional Details-" + helpHistory.getDescription() + "\n \n Regards,\n Team Dr Reddy Foundation";
 
-               /* Mail mail = new Mail();
+                Mail mail = new Mail();
                 mail.setMailFrom(APIUtils.MAIL_FROM);
                 mail.setMailTo(APIUtils.MAIL_TO);
                 mail.setMailSubject(APIUtils.MAIL_HELP_REQUEST);
                 mail.setMailContent(emailBody);
-                mailService.sendEmail(mail);*/
+                mailService.sendEmail(mail);
                 logger.info("Details inserted successfully");
                 return "success";
             }
