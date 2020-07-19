@@ -59,7 +59,7 @@ public class HelpHistoryDaoImpl implements HelpHistoryDao {
             } else {
                 logger.info("Updated help request in AdminHelpRequest Table");
                 String sql3 = "UPDATE  TBL_ADMIN_HELP_REQUEST_STATUS SET REASON=?,DETAILS=?,CENTRE_ID=?,DESCRIPTION=?,STATUS=?,CREATE_TIMESTAMP=? WHERE ASPIRANT_ID='" + id + "'";
-                jdbcTemplate.update(sql2, helpHistory.getReason(), helpHistory.getDetails(), helpHistory.getCenterId(), helpHistory.getDescription(), "New", sqlTime);
+                jdbcTemplate.update(sql3, helpHistory.getReason(), helpHistory.getDetails(), helpHistory.getCenterId(), helpHistory.getDescription(), "New", sqlTime);
             }
 
 

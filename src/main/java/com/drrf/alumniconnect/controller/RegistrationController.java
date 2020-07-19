@@ -27,7 +27,11 @@ public class RegistrationController {
     public Response userRegistration(@RequestBody UserProfile userProfile) {
         logger.info("Received request for new User signup");
         try {
+            //if(registrationService.newUserRegistration(userProfile)!=null)
             return Response.ok().entity(registrationService.newUserRegistration(userProfile)).build();
+           /* else{
+                return Response.ok().entity("Your details doent match/you already have an account").build();
+            }*/
         } catch (Exception e) {
             JsonObject error = new JsonObject();
             error.addProperty(APIUtils.ERROR_MESSAGE, e.getLocalizedMessage());

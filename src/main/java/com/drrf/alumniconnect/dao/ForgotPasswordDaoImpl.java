@@ -33,21 +33,10 @@ public class ForgotPasswordDaoImpl implements ForgotPasswordDao {
 		String message = "";
 
 		try {
-			String sql = "SELECT student_id,username,password,create_timestamp,update_timestamp FROM tbl_login_details where username = ?";
+			String sql = "SELECT sr_no, email_id,password FROM tbl_login_details where email_id = ?";
 
 			loginDetails = jdbcTemplate.queryForObject(sql, new Object[]{email}, new LoginDetailsRowMapper());
 
-			/*//for list
-			 * jdbcTemplate.query(sql, new RowCallbackHandler() { public void
-			 * processRow(ResultSet resultSet) throws SQLException { while
-			 * (resultSet.next()) {
-			 * loginDetails.setStudentId(resultSet.getLong("student_id"));
-			 * loginDetails.setUserName(resultSet.getString("username"));
-			 * loginDetails.setPassword(resultSet.getString("password"));
-			 * loginDetails.setCreateDate(resultSet.getTimestamp("create_timestamp"));
-			 * loginDetails.setUpdateDate(resultSet.getTimestamp("update_timestamp")); } }
-			 * });
-			 */
 
 			if (loginDetails == null ) {
 				throw new ForgotPasswordDaoException( String.format("User [%s]  information not available in the database", email));
@@ -70,7 +59,7 @@ public class ForgotPasswordDaoImpl implements ForgotPasswordDao {
 			throw e;
 		}catch(Exception e) {
 			logger.error(e.getLocalizedMessage(),e);
-			throw new ForgotPasswordDaoException( "Error occured while checking the user account information" +  email);
+			throw new ForgotPasswordDaoException( "Error occured while checking the user account information " +  email);
 		}
 
 		return message;
