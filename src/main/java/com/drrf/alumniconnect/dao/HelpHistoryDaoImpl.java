@@ -4,11 +4,7 @@ package com.drrf.alumniconnect.dao;
 import com.drrf.alumniconnect.exceptions.HelpHistoryDaoException;
 import com.drrf.alumniconnect.jdbcmapper.HelpDetailsRowMapper;
 import com.drrf.alumniconnect.jdbcmapper.UserNameRowMapper;
-import com.drrf.alumniconnect.model.AdminHelpRequestStatus;
-import com.drrf.alumniconnect.model.HelpDetails;
-import com.drrf.alumniconnect.model.HelpHistory;
-import com.drrf.alumniconnect.model.Mail;
-import com.drrf.alumniconnect.model.UserProfile;
+import com.drrf.alumniconnect.model.*;
 import com.drrf.alumniconnect.service.MailService;
 import com.drrf.alumniconnect.utils.APIUtils;
 import org.slf4j.Logger;
@@ -30,7 +26,8 @@ public class HelpHistoryDaoImpl implements HelpHistoryDao {
     MailService mailService;
 
     public String saveHelpDetails(HelpHistory helpHistory) throws HelpHistoryDaoException {
-        List<UserProfile> userProfile1 = null;
+       // List<UserName> userProfile1 = null;
+        UserName userProfile1 = new UserName();
         try {
             java.util.Date date=new java.util.Date();
             Timestamp sqlTime=new Timestamp(date.getTime());
@@ -38,13 +35,8 @@ public class HelpHistoryDaoImpl implements HelpHistoryDao {
             logger.info("Inserting a new help request with Reason{}, Details{}, Description{} for student Id{}",helpHistory.getReason(), helpHistory.getDetails(),helpHistory.getDescription(),helpHistory.getAspirantId());
             String sql = "INSERT INTO tbl_help_history (ASPIRANT_ID,REASON,DETAILS,CENTRE_ID,CREATE_TIMESTAMP,DESCRIPTION) VALUES (?,?,?,?,?,?)";
             int i = jdbcTemplate.update(sql, new Object[] { helpHistory.getAspirantId(), helpHistory.getReason(), helpHistory.getDetails(), helpHistory.getCenterId(), sqlTime,helpHistory.getDescription() });
-            //  String st = "INSERT INTO DRF.TBL_ADMIN_HELP_REQUEST_STATUS (STATUS,CREATE_TIMESTAMP,STUDENT_ID) VALUES(?,?,?)";
-            //jdbcTemplate.update(st,new Object[] {"New",sqlTime,helpHistory.getStudentId()});
-          // String sql2 = "select pd.FIRST_NAME from tbl_profile_data pd inner join tbl_help_history hd on  (pd.aspirant_id = hd.aspirant_id) where hd.aspirant_id=?";
-             String sql2="select * from tbl_profile_data where aspirant_Id="+helpHistory.getAspirantId();
-           userProfile1 = jdbcTemplate.query(sql2, new UserNameRowMapper());
-            // userProfile1 = jdbcTemplate.queryForObject(sql2,new Object[]{ helpHistory.getAspirantId()}, new UserProfileRowMapper());
-            System.out.println("Display user name"+ userProfile1.get(0).getFirstName()+"Display Last name"+userProfile1.get(0).getLastName());
+             String sql2="select ASPIRANT_ID,FIRST_NAME,LAST_NAME from tbl_profile_data where aspirant_Id=?";
+             userProfile1 = jdbcTemplate.queryForObject(sql2, new Object[]{helpHistory.getAspirantId()},new UserNameRowMapper());
             logger.info("The value of i"+i);
 
             logger.info("Checking if ASPIRANT already made a Help Request ");
@@ -75,15 +67,15 @@ public class HelpHistoryDaoImpl implements HelpHistoryDao {
             if (i == 0) {
                 throw new HelpHistoryDaoException("Error occured while saving user help information" + helpHistory.getAspirantId());
             } else {
-               String emailBody = "Dear Admin,\n\n A help request has been initialized by"+userProfile1.get(0).getFirstName()+userProfile1.get(0).getLastName()+" (Aspirant Id-" + + helpHistory.getAspirantId() + ") and the details of the request are as follows: \n\n Problem Type-" + helpHistory.getReason() + "\n Problem Description-" + helpHistory.getDetails() + "\n Additional Details-" + helpHistory.getDescription() + "\n \n Regards,\n Team Dr Reddy Foundation";
+               String emailBody = "Dear Admin,\n\n A help request has been initialized by"+userProfile1.getFirstName()+userProfile1.getLastName()+" (Aspirant Id-" + + helpHistory.getAspirantId() + ") and the details of the request are as follows: \n\n Problem Type-" + helpHistory.getReason() + "\n Problem Description-" + helpHistory.getDetails() + "\n Additional Details-" + helpHistory.getDescription() + "\n \n Regards,\n Team Dr Reddy Foundation";
 
-                Mail mail = new Mail();
+               /* Mail mail = new Mail();
                 mail.setMailFrom(APIUtils.MAIL_FROM);
                 mail.setMailTo(APIUtils.MAIL_TO);
                 mail.setMailSubject(APIUtils.MAIL_HELP_REQUEST);
                 mail.setMailContent(emailBody);
-                mailService.sendEmail(mail);
-                logger.info("Detaiils inserted successfully");
+                mailService.sendEmail(mail);*/
+                logger.info("Details inserted successfully");
                 return "success";
             }
 

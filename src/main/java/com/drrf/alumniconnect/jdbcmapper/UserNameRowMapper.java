@@ -1,16 +1,17 @@
 package com.drrf.alumniconnect.jdbcmapper;
 
+import com.drrf.alumniconnect.model.UserName;
 import com.drrf.alumniconnect.model.UserProfile;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class UserNameRowMapper implements RowMapper<UserProfile> {
+public class UserNameRowMapper implements RowMapper<UserName> {
     @Override
-    public UserProfile mapRow(ResultSet resultSet, int rowNum) throws SQLException {
+    public UserName mapRow(ResultSet resultSet, int rowNum) throws SQLException {
 
-        UserProfile userProfile = new UserProfile();
+        UserName userProfile = new UserName();
 
         userProfile.setAspirantId(resultSet.getLong("ASPIRANT_ID"));
         userProfile.setFirstName(resultSet.getString("FIRST_NAME"));
