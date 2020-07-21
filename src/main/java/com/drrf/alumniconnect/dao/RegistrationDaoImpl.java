@@ -53,7 +53,7 @@ public class RegistrationDaoImpl implements RegistrationDao{
             logger.info("Profile Details Matched...Creating account for " + userProfile1.getEmailId());
             final String check_login_details = "select * from tbl_login_details where email_id=?";
             try {
-                loginDetails = jdbcTemplate.queryForObject(check_login_details, new Object[]{userProfile.getEmailId()}, new LoginDetailsRowMapper());
+                loginDetails = jdbcTemplate.queryForObject(check_login_details, new Object[]{userProfile1.getEmailId()}, new LoginDetailsRowMapper());
                 logger.info("Account already exists for email id:" + userProfile1.getEmailId());
 
                 return null;
@@ -68,8 +68,6 @@ public class RegistrationDaoImpl implements RegistrationDao{
                 String pass = generatePassword(8);
                 //System.out.println(pass);
                 jdbcTemplate.update(insert_login_details, userProfile1.getEmailId(), pass, formattedDate, formattedDate);
-                    /*String emailBody = "New User Registration\n\nPlease find the details below.\n\n\n"
-                            + "User ID: " + userProfile.getAspirantId() + " \nPassword: " + pass;*/
                 String emailBody = "Dear " + userProfile1.getFirstName() + ",\n\n" +
                         "Your Registration for the DRF application is successful and your login credentials are as below." +
                         "Please reset your password after the initial login using the change password functionality.\n\n"
@@ -97,7 +95,7 @@ public class RegistrationDaoImpl implements RegistrationDao{
         }
         catch (Exception e1){
             logger.error(e1.getLocalizedMessage(),e1);
-            throw new RegistrationDaoException("Error occured while checking profile details user:"+userProfile.getAspirantId()+"."+e1.getLocalizedMessage());
+            throw new RegistrationDaoException("Error occured while checking profile details user:"+userProfile1.getAspirantId()+"."+e1.getLocalizedMessage());
         }
     }
 
