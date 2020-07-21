@@ -13,6 +13,8 @@ public class UserProfile {
 	private String currentOrganization;
 	private long cityId;
 	private String cityName;
+	private Long stateId;
+	private String stateName;
 	private long centerId;
 	private String centerName;
 	private String isAdmin;
@@ -106,14 +108,34 @@ public class UserProfile {
 	public void setUpdateDate(Date updateDate) {
 		this.updateDate = updateDate;
 	}
+	public Long getStateId() {
+		return stateId;
+	}
+	public void setStateId(Long stateId) {
+		this.stateId = stateId;
+	}
+	public String getStateName() {
+		return stateName;
+	}
+	public void setStateName(String stateName) {
+		this.stateName = stateName;
+	}
 	
 	@Override
 	public String toString() {
 		return "UserProfile [aspirantId=" + aspirantId + ", firstName=" + firstName + ", lastName=" + lastName
 				+ ", emailId=" + emailId + ", phone=" + phone + ", dob=" + dob + ", currentOrganization="
-				+ currentOrganization + ", cityId=" + cityId + ", cityName=" + cityName + ", centerId=" + centerId
-				+ ", centerName=" + centerName + ", isAdmin=" + isAdmin + ", createDate=" + createDate + ", updateDate="
-				+ updateDate + "]";
+				+ currentOrganization + ", cityId=" + cityId + ", cityName=" + cityName + ", stateId=" + stateId
+				+ ", stateName=" + stateName + ", centerId=" + centerId + ", centerName=" + centerName + ", isAdmin="
+				+ isAdmin + ", createDate=" + createDate + ", updateDate=" + updateDate + ", getAspirantId()="
+				+ getAspirantId() + ", getFirstName()=" + getFirstName() + ", getLastName()=" + getLastName()
+				+ ", getEmailId()=" + getEmailId() + ", getPhone()=" + getPhone() + ", getDob()=" + getDob()
+				+ ", getCurrentOrganization()=" + getCurrentOrganization() + ", getCityId()=" + getCityId()
+				+ ", getCityName()=" + getCityName() + ", getCenterId()=" + getCenterId() + ", getCenterName()="
+				+ getCenterName() + ", getIsAdmin()=" + getIsAdmin() + ", getCreateDate()=" + getCreateDate()
+				+ ", getUpdateDate()=" + getUpdateDate() + ", getStateId()=" + getStateId() + ", getStateName()="
+				+ getStateName() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()="
+				+ super.toString() + "]";
 	}
 
 

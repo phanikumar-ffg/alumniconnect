@@ -21,11 +21,13 @@ public class UserProfileRowMapper implements RowMapper<UserProfile> {
 		userProfile.setDob(resultSet.getDate("DOB"));
 		userProfile.setPhone(resultSet.getLong("PHONE"));
 		userProfile.setEmailId(resultSet.getString("EMAIL_ID"));
-		userProfile.setCityId(resultSet.getLong("CITY_ID"));
-		userProfile.setCityName(resultSet.getString("CITY_NAME"));
+		userProfile.setCurrentOrganization(resultSet.getString("CURRENT_ORGANIZATION"));
 		userProfile.setCenterId(resultSet.getLong("CENTRE_ID"));
 		userProfile.setCenterName(resultSet.getString("CENTRE_NAME"));
-		userProfile.setCurrentOrganization(resultSet.getString("CURRENT_ORGANIZATION"));
+		userProfile.setCityId(resultSet.getLong("CITY_ID"));
+		userProfile.setCityName(resultSet.getString("CITY_NAME"));
+		userProfile.setStateId(resultSet.getLong("STATE_ID"));
+		userProfile.setStateName(resultSet.getString("STATE_NAME"));
 		userProfile.setIsAdmin(resultSet.getString("IS_ADMIN"));
 	    
 		return userProfile;
