@@ -25,59 +25,59 @@ import com.drrf.alumniconnect.model.LoginDetails;
 
 @Path("/api/v1")
 public class ProfileInformationController {
-	private static final Logger logger = LoggerFactory.getLogger(ProfileInformationController.class);
-	@Autowired
-	private ProfileInformationService profileInformationService;
-	
-	@GET
-	@Path("/profile/{input}")
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Response getProfileInfo(@PathParam(value = "input") String input) { 
-		logger.info("Received request for Profile");
-		try {
-			return Response.ok().entity(profileInformationService.getProfileInfo(input)).build();
-		} catch (Exception e) {	
-			return Response.status(Status.BAD_REQUEST).entity("error").build();
-		}
+    private static final Logger logger = LoggerFactory.getLogger(ProfileInformationController.class);
+    @Autowired
+    private ProfileInformationService profileInformationService;
 
-	}
+    @GET
+    @Path("/profile/{input}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getProfileInfo(@PathParam(value = "input") String input) {
+        logger.info("Received request for Profile");
+        try {
+            return Response.ok().entity(profileInformationService.getProfileInfo(input)).build();
+        } catch (Exception e) {
+            return Response.status(Status.BAD_REQUEST).entity("error").build();
+        }
 
-	@PUT
-	@Path("/profileUpdate")
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Response updateProfileInfo(@RequestBody UserProfile userProfile) { 
-		logger.info("Received request for Profile");
-		try {
-			return Response.ok().entity(profileInformationService.updateProfileInfo(userProfile)).build();
-		} catch (Exception e) {	
-			return Response.status(Status.BAD_REQUEST).entity("error").build();
-		}
-	}
+    }
 
-	@POST
-	@Path("/saveProfileInfo")
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Response saveProfileDetails(@RequestBody UserProfile userProfile) {
-		try {
-			return Response.ok().entity(profileInformationService.saveProfileDetails(userProfile)).build();
-		} catch (Exception e) {
-				return Response.status(Status.BAD_REQUEST).entity("error").build();
-		}
-	}
+    @PUT
+    @Path("/saveProfileInfo")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response updateProfileInfo(@RequestBody UserProfile userProfile) {
+        logger.info("Received request for Profile");
+        try {
+            return Response.ok().entity(profileInformationService.updateProfileInfo(userProfile)).build();
+        } catch (Exception e) {
+            return Response.status(Status.BAD_REQUEST).entity("error").build();
+        }
+    }
 
-	@POST
-	@Path("/updatePassword")
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Response saveProfileDetails(@RequestBody LoginDetails newPassword) {
-		System.out.print(newPassword.getEmailId()+' '+newPassword.getPassword());
-		try {
-			return Response.ok().entity(profileInformationService.updatePassword(newPassword)).build();
-		} catch (Exception e) {
-				return Response.status(Status.BAD_REQUEST).entity("error").build();
-		}
-	}
+    @POST
+    @Path("/updateProfile")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response saveProfileDetails(@RequestBody UserProfile userProfile) {
+        try {
+            return Response.ok().entity(profileInformationService.saveProfileDetails(userProfile)).build();
+        } catch (Exception e) {
+            return Response.status(Status.BAD_REQUEST).entity("error").build();
+        }
+    }
+
+    @POST
+    @Path("/updatePassword")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response saveProfileDetails(@RequestBody LoginDetails newPassword) {
+        System.out.print(newPassword.getEmailId()+' '+newPassword.getPassword());
+        try {
+            return Response.ok().entity(profileInformationService.updatePassword(newPassword)).build();
+        } catch (Exception e) {
+            return Response.status(Status.BAD_REQUEST).entity("error").build();
+        }
+    }
 }

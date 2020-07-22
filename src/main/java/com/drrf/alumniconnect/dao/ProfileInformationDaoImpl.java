@@ -25,15 +25,15 @@ public class ProfileInformationDaoImpl implements ProfileInformationDao {
 
 	@Override
 	public UserProfile getProfileInfo(String input) {
-	UserProfile userProfile = null;
+		UserProfile userProfile = null;
 
-        try {
-            // final String get_all_profiles = "SELECT * FROM tbl_profile_data";
-            // userProfile = jdbcTemplate.query(get_all_profiles, new UserProfileRowMapper());
+		try {
+			// final String get_all_profiles = "SELECT * FROM tbl_profile_data";
+			// userProfile = jdbcTemplate.query(get_all_profiles, new UserProfileRowMapper());
 
-        } catch (Exception e) {
-            logger.error(e.getLocalizedMessage(),e);
-            throw e;
+		} catch (Exception e) {
+			logger.error(e.getLocalizedMessage(),e);
+			throw e;
 		}
 
 		return userProfile;
@@ -46,34 +46,27 @@ public class ProfileInformationDaoImpl implements ProfileInformationDao {
 
 	@Override
 	public UserProfile saveProfileDetails(UserProfile userProfile) throws UserProfileInformationDaoException{
-	try {
-			// String sql = "INSERT INTO tbl_profile_data (studentId,firstName,lastName,mobile,email,address,cityId,centerId,dob,createDate,updateDate) VALUES ('" 
-			// + userProfile.getStudentId() + "','" + userProfile.getFirstName() +"','" + userProfile.getLastName() + "','" + jobInformation.getMobile() + "',	'" 
-			// + userProfile.getEmail() + "','" + userProfile.getAddress() + "','"+ userProfile.getCityId() +"','"+ userProfile.getCenterId() +"','"
-			// + userProfile.getDob() +"','"+ userProfile.getCreateDate() +"','"+ userProfile.getUpdateDate() +"')";
-			// int i = jdbcTemplate.update(sql);
-			int i = 1;
-			if(i==0){
-				throw new UserProfileInformationDaoException("Error occurred while saving Profile Info");
-			}
-			else {
-				return userProfile;
-			}
+		try {
+			java.util.Date date=new java.util.Date();
+			Timestamp sqlTime=new Timestamp(date.getTime());
+			String sql = "UPDATE tbl_profile_data set phone = ?, current_Organization =  ?, city_id = ?, update_timestamp = ? where email_id = ?";
+			jdbcTemplate.update(sql, new Object[] { userProfile.getPhone(), userProfile.getCurrentOrganization(), userProfile.getCityId(), sqlTime, userProfile.getEmailId()});
 		}
 		catch(Exception e){
 			logger.error(e.getLocalizedMessage(),e);
 			throw new UserProfileInformationDaoException( "Error occured while saving Profile Info");
 		}
+		return userProfile;
 	}
 
 	@Override
 	public String updatePassword(LoginDetails newCredentials) throws UserProfileInformationDaoException{
-	try {
-		System.out.print(newCredentials);
-		java.util.Date date=new java.util.Date();
-		Timestamp sqlTime=new Timestamp(date.getTime());
-		String sql = "UPDATE tbl_login_details set password = ?, update_timestamp = ? where email_id = ?";
-		jdbcTemplate.update(sql, new Object[] { newCredentials.getPassword(), sqlTime, newCredentials.getEmailId()});
+		try {
+			System.out.print(newCredentials);
+			java.util.Date date=new java.util.Date();
+			Timestamp sqlTime=new Timestamp(date.getTime());
+			String sql = "UPDATE tbl_login_details set password = ?, update_timestamp = ? where email_id = ?";
+			jdbcTemplate.update(sql, new Object[] { newCredentials.getPassword(), sqlTime, newCredentials.getEmailId()});
 		}
 		catch(Exception e){
 			logger.error(e.getLocalizedMessage(),e);
