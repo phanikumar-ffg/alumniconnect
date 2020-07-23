@@ -48,7 +48,7 @@ public class ForgotPasswordDaoImpl implements ForgotPasswordDao {
 
 		        Mail mail = new Mail();
 		        mail.setMailFrom(APIUtils.MAIL_FROM);
-		        mail.setMailTo(APIUtils.MAIL_TO);
+		        mail.setMailTo(loginDetails.getEmailId());
 		        mail.setMailSubject(APIUtils.MAIL_FORGOT_PWD_SUB);
 		        mail.setMailContent(emailBody);
 		        mailService.sendEmail(mail);
