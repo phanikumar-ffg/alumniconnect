@@ -76,7 +76,7 @@ public class RegistrationDaoImpl implements RegistrationDao{
                 logger.info("Account created for user " + userProfile1.getEmailId());
                 Mail mail = new Mail();
                 mail.setMailFrom(APIUtils.MAIL_FROM);
-                mail.setMailTo(/*userProfile1.getEmail()*/APIUtils.MAIL_TO);
+                mail.setMailTo(userProfile1.getEmailId()/*APIUtils.MAIL_TO*/);
                 mail.setMailSubject(APIUtils.MAIL_NEW_USR_SUB);
                 mail.setMailContent(emailBody);
                 mailService.sendEmail(mail);
