@@ -1,5 +1,6 @@
 package com.drrf.alumniconnect.dao;
 
+import com.drrf.alumniconnect.exceptions.ContentNotFoundDaoException;
 import com.drrf.alumniconnect.jdbcmapper.ContentManagementRowMapper;
 import com.drrf.alumniconnect.model.ContentManagement;
 import org.slf4j.Logger;
@@ -22,15 +23,14 @@ public class ContentManagementDaoImpl implements ContentManagementDao {
         List<ContentManagement> contentManagementList = null;
 
         try {
-            final String get_all_content_info = "SELECT * FROM TBL_CONTENT_MANAGEMENT";
+            final String get_all_content_info = "SELECT * FROM TBL_CONTENT_MANAGEMENT where CREATE_TIMESTAMP is NOT NULL order by CREATE_TIMESTAMP DESC";
 
             contentManagementList = jdbcTemplate.query(get_all_content_info, new ContentManagementRowMapper());
 
         } catch (CannotGetJdbcConnectionException e) {
             logger.error("Error occurred while fetching the information from content management table: ",e.getMessage());
         }
-
         return contentManagementList;
-
     }
+
 }
