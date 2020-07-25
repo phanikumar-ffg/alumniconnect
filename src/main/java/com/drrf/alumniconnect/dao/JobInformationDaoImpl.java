@@ -15,6 +15,7 @@ import java.util.List;
 
 import com.drrf.alumniconnect.jdbcmapper.JobInformationRowMapper;
 import com.drrf.alumniconnect.model.JobInformation;
+import com.drrf.alumniconnect.model.JobRequest;
 
 @Repository
 public class JobInformationDaoImpl implements JobInformationDao{
@@ -40,6 +41,26 @@ public class JobInformationDaoImpl implements JobInformationDao{
 		return jobs;
 		
 	}
+
+	@Override
+	public List<JobInformation> getAllJobs() throws Exception{
+		List<JobInformation> jobs = null;
+
+        try {
+	    logger.info("Getting jobs from the DB...");
+            final String get_all_jobs = "select tbl_job_information.JOB_ID, tbl_job_information.COMPANY_NAME, tbl_job_information.DESIGNATION, tbl_job_information.JOB_DESCRIPTION, tbl_city_details.CITY_NAME from tbl_job_information INNER Join tbl_city_details on tbl_job_information.CITY_ID = tbl_city_details.CITY_ID";
+	    jobs = jdbcTemplate.query(get_all_jobs, new JobInformationRowMapper());
+	    logger.info("Successfully recieved jobs from DB");
+
+        } catch (Exception e) {
+            logger.error("Error: "+e.getLocalizedMessage());
+            throw e;
+		}
+
+		return jobs;
+		
+	}
+
 	public String saveJobEntryDetails(JobInformation jobInformation) throws JobInformationDaoException {
 		try {
 			java.util.Date date=new java.util.Date();
@@ -62,6 +83,30 @@ public class JobInformationDaoImpl implements JobInformationDao{
 		catch(Exception e){
 			logger.error(e.getLocalizedMessage(),e);
 			throw new JobInformationDaoException( "Error occured while saving job details" +jobInformation.getJobId());
+		}
+
+	}
+
+	public String deleteJobEntry(JobRequest jobInformation) throws JobInformationDaoException {
+		try {
+			logger.info("Deleting job Entry: "+jobInformation.getJobId());
+			String sql = "delete from tbl_job_information where job_id = ?";
+			int i = jdbcTemplate.update(sql,new Object[]{ jobInformation.getJobId()});
+			if(i==0){
+				throw new JobInformationDaoException("Error occurred while Deleting Job Details"+jobInformation.getJobId());
+			}
+			else {
+				logger.info("Job entry deleted successfully");
+				return "success";
+			}
+		}
+		catch (JobInformationDaoException e) {
+			logger.error(e.getLocalizedMessage(),e);
+			throw e;
+		}
+		catch(Exception e){
+			logger.error(e.getLocalizedMessage(),e);
+			throw new JobInformationDaoException( "Error occured while deleting job details" +jobInformation.getJobId());
 		}
 
 	}
