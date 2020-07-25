@@ -45,7 +45,7 @@ public class ProfileInformationController {
     }
 
     @POST
-    @Path("/profile/requestCertificate/{input}")
+    @Path("/profile/requestCertificate")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response requestCertificate(@RequestBody CertificateRequestObject certificateRequestObject) {
