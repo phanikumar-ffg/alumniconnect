@@ -1,20 +1,20 @@
 package com.drrf.alumniconnect.dao;
 
 import java.sql.Timestamp;
+
+import com.drrf.alumniconnect.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.drrf.alumniconnect.model.UserProfile;
-import com.drrf.alumniconnect.model.Mail;
 import com.drrf.alumniconnect.service.MailService;
 import com.drrf.alumniconnect.utils.APIUtils;
 import org.springframework.jdbc.core.JdbcTemplate;
 import com.drrf.alumniconnect.jdbcmapper.UserProfileRowMapper;
 import com.drrf.alumniconnect.model.UserProfile;
-import com.drrf.alumniconnect.model.LoginDetails;
 import com.drrf.alumniconnect.exceptions.UserProfileInformationDaoException;
+import org.springframework.web.client.RestTemplate;
 
 
 @Repository
@@ -23,6 +23,8 @@ public class ProfileInformationDaoImpl implements ProfileInformationDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
+	@Autowired
+	private RestTemplate restTemplate;
 	@Override
 	public UserProfile getProfileInfo(String input) {
 		UserProfile userProfile = null;
@@ -57,6 +59,21 @@ public class ProfileInformationDaoImpl implements ProfileInformationDao {
 			throw new UserProfileInformationDaoException( "Error occured while saving Profile Info");
 		}
 		return userProfile;
+	}
+
+	@Override
+	public String requestCertificate(CertificateRequestObject certificateRequestObject) throws UserProfileInformationDaoException{
+		String url = "api/GrowAPI/RequestCerificate";
+		String response;
+		try {
+			 response =restTemplate.postForObject( url, certificateRequestObject, String.class);
+		}
+		catch(Exception e){
+			logger.error(e.getLocalizedMessage(),e);
+			throw new UserProfileInformationDaoException( "Error occured while sending Cerificate request");
+		}
+		System.out.println("Certificate Response "+response);
+		return response;
 	}
 
 	@Override
