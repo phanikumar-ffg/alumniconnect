@@ -47,7 +47,8 @@ public class RegistrationDaoImpl implements RegistrationDao{
     public UserProfile newUserRegistration(UserProfile userProfile) throws RegistrationDaoException {
         UserProfile userProfile1 = null;
         LoginDetails loginDetails;
-        final String check_profile_details = "select * from tbl_profile_data pd inner join tbl_centre_details cd on (pd.centre_id= cd.centre_id) inner join tbl_city_details ctd on (pd.city_id = ctd.city_id) where (pd.aspirant_id=? and pd.email_id=?) or (pd.aspirant_id=? and pd.phone=?) or (pd.email_id=? and pd.phone=?)";
+        final String check_profile_details = "select * from tbl_profile_data pd inner join tbl_centre_details cd on (pd.centre_id= cd.centre_id) inner join tbl_city_details ctd on (pd.city_id = ctd.city_id) inner join tbl_state_details tsd on(ctd.STATE_ID=tsd.STATE_ID) \r\n" +
+                "where (pd.aspirant_id=? and pd.email_id=?) or (pd.aspirant_id=? and pd.phone=?) or (pd.email_id=? and pd.phone=?)";
         try {
             userProfile1 = jdbcTemplate.queryForObject(check_profile_details, new Object[]{userProfile.getAspirantId(), userProfile.getEmailId(), userProfile.getAspirantId(), userProfile.getPhone(), userProfile.getEmailId(), userProfile.getPhone(),/*new SimpleDateFormat("yyyy-MM-dd").format(userProfile.getDob())*/}, new UserProfileRowMapper());
             logger.info("Profile Details Matched...Creating account for " + userProfile1.getEmailId());
