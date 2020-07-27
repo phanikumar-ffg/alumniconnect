@@ -37,12 +37,13 @@ public class ForgotPasswordDaoImpl implements ForgotPasswordDao {
 
 			loginDetails = jdbcTemplate.queryForObject(sql, new Object[]{email}, new LoginDetailsRowMapper());
 
-
+			
 			if (loginDetails == null ) {
 				throw new ForgotPasswordDaoException( String.format("User [%s]  information not available in the database", email));
 			}else {
 				//write the code to send details to email and phone
 				//need smtp details
+				logger.info("User found and getting ready to send email.");
 				String emailBody= "Dr Reddy's Foundation welcome you,\n\nYour request for password deteails is successful. Please find the details below.\n\n\n"
 						+ "User ID: "+loginDetails.getEmailId()+" \nPassword: "+loginDetails.getPassword()+"\n \n Regards,\n Dr Reddy Foundation";
 
@@ -54,6 +55,7 @@ public class ForgotPasswordDaoImpl implements ForgotPasswordDao {
 		        mailService.sendEmail(mail);
 
 				message ="Your login ID and password is sent to your email ID:"+ loginDetails.getEmailId() +" and registered mobile number. If you don't get the details in 5 min, please contact the admin. Admin E-mail ID: abc@gmail.com";
+		        logger.info(message);
 			}
 		} catch (ForgotPasswordDaoException e) {
 			throw e;
