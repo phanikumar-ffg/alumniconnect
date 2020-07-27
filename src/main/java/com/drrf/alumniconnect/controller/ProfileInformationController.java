@@ -11,6 +11,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import com.drrf.alumniconnect.model.CertificateRequestObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -43,14 +44,14 @@ public class ProfileInformationController {
 
     }
 
-    @PUT
-    @Path("/saveProfileInfo")
+    @POST
+    @Path("/requestCertificate")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response updateProfileInfo(@RequestBody UserProfile userProfile) {
-        logger.info("Received request for Profile");
+    public Response updateProfileInfo(@RequestBody CertificateRequestObject certificateRequestObject) {
+        logger.info("Received request for Profile " + certificateRequestObject.getAspirantId() + certificateRequestObject.getEmail() + certificateRequestObject.getCenterId() + certificateRequestObject.getCenterName());
         try {
-            return Response.ok().entity(profileInformationService.updateProfileInfo(userProfile)).build();
+            return Response.ok().entity(profileInformationService.requestCertificate(certificateRequestObject)).build();
         } catch (Exception e) {
             return Response.status(Status.BAD_REQUEST).entity("error").build();
         }
