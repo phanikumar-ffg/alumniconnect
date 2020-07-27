@@ -1,5 +1,6 @@
 package com.drrf.alumniconnect.service;
 
+import com.drrf.alumniconnect.model.CertificateRequestObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -21,8 +22,8 @@ public class ProfileInformationServiceImpl implements ProfileInformationService 
 	}
 
 	@Override
-	public String updateProfileInfo(UserProfile userProfile) throws Exception{
-		return ProfileInformationDao.updateProfileInfo(userProfile);
+	public String requestCertificate(CertificateRequestObject certificateRequestObject) throws Exception{
+		return ProfileInformationDao.requestCertificate(certificateRequestObject);
 	}
 
 	@Override
