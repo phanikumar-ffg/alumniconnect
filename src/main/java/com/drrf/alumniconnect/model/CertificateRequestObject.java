@@ -4,9 +4,27 @@ import java.util.Date;
 
 public class CertificateRequestObject {
     private long aspirantId;
-    private String emailId;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    private String email;
+    private long certificate_type;
     private long centerId;
     private String centerName;
+
+    public long getCertificate_type() {
+        return certificate_type;
+    }
+
+    public void setCertificate_type(long certificate_type) {
+        this.certificate_type = certificate_type;
+    }
 
     public long getAspirantId() {
         return aspirantId;
@@ -16,13 +34,7 @@ public class CertificateRequestObject {
         this.aspirantId = aspirantId;
     }
 
-    public String getEmailId() {
-        return emailId;
-    }
 
-    public void setEmailId(String emailId) {
-        this.emailId = emailId;
-    }
 
     public long getCenterId() {
         return centerId;
@@ -30,6 +42,16 @@ public class CertificateRequestObject {
 
     public void setCenterId(long centerId) {
         this.centerId = centerId;
+    }
+
+    @Override
+    public String toString() {
+        return "CertificateRequestObject{" +
+                "aspirantId=" + aspirantId +
+                ", emailId='" + email + '\'' +
+                ", centerId=" + centerId +
+                ", centerName='" + centerName + '\'' +
+                '}';
     }
 
     public String getCenterName() {

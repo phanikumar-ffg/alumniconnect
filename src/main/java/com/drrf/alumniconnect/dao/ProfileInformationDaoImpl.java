@@ -1,8 +1,11 @@
 package com.drrf.alumniconnect.dao;
 
 import java.sql.Timestamp;
+import java.util.HashMap;
 
 import com.drrf.alumniconnect.model.*;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +18,8 @@ import com.drrf.alumniconnect.jdbcmapper.UserProfileRowMapper;
 import com.drrf.alumniconnect.model.UserProfile;
 import com.drrf.alumniconnect.exceptions.UserProfileInformationDaoException;
 import org.springframework.web.client.RestTemplate;
+
+import javax.xml.ws.Response;
 
 
 @Repository
@@ -63,8 +68,11 @@ public class ProfileInformationDaoImpl implements ProfileInformationDao {
 
 	@Override
 	public String requestCertificate(CertificateRequestObject certificateRequestObject) throws UserProfileInformationDaoException{
-		String url = "api/GrowAPI/RequestCerificate";
-		String response;
+		ObjectMapper objectMapper= new ObjectMapper();
+		String key="o98QEu_kHax";
+		String url = "http://52.172.212.215:93/api/GrowAPI/RequestCerificate?APIKey="+key;
+        String response;
+        String message = null;
 		try {
 			 response =restTemplate.postForObject( url, certificateRequestObject, String.class);
 		}
@@ -72,8 +80,14 @@ public class ProfileInformationDaoImpl implements ProfileInformationDao {
 			logger.error(e.getLocalizedMessage(),e);
 			throw new UserProfileInformationDaoException( "Error occured while sending Cerificate request");
 		}
-		System.out.println("Certificate Response "+response);
-		return response;
+		try {
+			HashMap responseObject=objectMapper.readValue(response, HashMap.class);
+			message= (String) responseObject.get("Message");
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		System.out.println("Certificate Response Message: "+ message);
+		return message;
 	}
 
 	@Override

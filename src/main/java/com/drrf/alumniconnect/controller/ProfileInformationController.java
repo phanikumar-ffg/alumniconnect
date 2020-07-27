@@ -49,7 +49,7 @@ public class ProfileInformationController {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response requestCertificate(@RequestBody CertificateRequestObject certificateRequestObject) {
-        logger.info("Received request for Certificate");
+        logger.info("Received request for Certificate ", certificateRequestObject);
         try {
             return Response.ok().entity(profileInformationService.requestCertificate(certificateRequestObject)).build();
         } catch (Exception e) {
