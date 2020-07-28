@@ -2,8 +2,11 @@ package com.drrf.alumniconnect.model;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class CertificateRequestObject {
     private long aspirantId;
+    @JsonProperty("Email")
     private String Email;
     private long centerId;
     private String centerName;
