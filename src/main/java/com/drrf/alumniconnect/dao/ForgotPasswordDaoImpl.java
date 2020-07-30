@@ -5,6 +5,7 @@ import javax.mail.AuthenticationFailedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -36,11 +37,6 @@ public class ForgotPasswordDaoImpl implements ForgotPasswordDao {
 			String sql = "SELECT sr_no, email_id,password FROM tbl_login_details where email_id = ?";
 
 			loginDetails = jdbcTemplate.queryForObject(sql, new Object[]{email}, new LoginDetailsRowMapper());
-
-			
-			if (loginDetails == null ) {
-				throw new ForgotPasswordDaoException( String.format("User [%s]  information not available in the database", email));
-			}else {
 				//write the code to send details to email and phone
 				//need smtp details
 				logger.info("User found and getting ready to send email.");
@@ -53,15 +49,13 @@ public class ForgotPasswordDaoImpl implements ForgotPasswordDao {
 		        mail.setMailSubject(APIUtils.MAIL_FORGOT_PWD_SUB);
 		        mail.setMailContent(emailBody);
 		        mailService.sendEmail(mail);
-
-				message ="Your login ID and password is sent to your email ID:"+ loginDetails.getEmailId() +" and registered mobile number. If you don't get the details in 5 min, please contact the admin. Admin E-mail ID: abc@gmail.com";
-		        logger.info(message);
-			}
-		} catch (ForgotPasswordDaoException e) {
-			throw e;
-		}catch(Exception e) {
-			logger.error(e.getLocalizedMessage(),e);
-			throw new ForgotPasswordDaoException( "Error occured while checking the user account information " +  email);
+            logger.info("mail sent");
+				    message ="Your login ID and password is sent to your email ID "+ loginDetails.getEmailId() +" and registered mobile number. If you dont get the details in 5 min, please contact the admin. Admin E-mail ID abc@gmail.com";
+		}catch (EmptyResultDataAccessException e){
+        throw new ForgotPasswordDaoException( String.format("User information not available in the database"));
+    } catch(Exception e) {
+			  logger.error(e.getLocalizedMessage(),e);
+			  throw new ForgotPasswordDaoException( "Error occured while checking the user account information " +  email);
 		}
 
 		return message;
