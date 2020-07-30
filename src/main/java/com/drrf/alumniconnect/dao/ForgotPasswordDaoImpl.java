@@ -37,10 +37,9 @@ public class ForgotPasswordDaoImpl implements ForgotPasswordDao {
 			String sql = "SELECT sr_no, email_id,password FROM tbl_login_details where email_id = ?";
 
 			loginDetails = jdbcTemplate.queryForObject(sql, new Object[]{email}, new LoginDetailsRowMapper());
-
-
 				//write the code to send details to email and phone
 				//need smtp details
+				logger.info("User found and getting ready to send email.");
 				String emailBody= "Dr Reddy's Foundation welcome you,\n\nYour request for password deteails is successful. Please find the details below.\n\n\n"
 						+ "User ID: "+loginDetails.getEmailId()+" \nPassword: "+loginDetails.getPassword()+"\n \n Regards,\n Dr Reddy Foundation";
 
@@ -50,13 +49,13 @@ public class ForgotPasswordDaoImpl implements ForgotPasswordDao {
 		        mail.setMailSubject(APIUtils.MAIL_FORGOT_PWD_SUB);
 		        mail.setMailContent(emailBody);
 		        mailService.sendEmail(mail);
-                logger.info("mail sent");
-				message ="Your login ID and password is sent to your email ID "+ loginDetails.getEmailId() +" and registered mobile number. If you dont get the details in 5 min, please contact the admin. Admin E-mail ID abc@gmail.com";
+            logger.info("mail sent");
+				    message ="Your login ID and password is sent to your email ID "+ loginDetails.getEmailId() +" and registered mobile number. If you dont get the details in 5 min, please contact the admin. Admin E-mail ID abc@gmail.com";
 		}catch (EmptyResultDataAccessException e){
-            throw new ForgotPasswordDaoException( String.format("User information not available in the database"));
-        } catch(Exception e) {
-			logger.error(e.getLocalizedMessage(),e);
-			throw new ForgotPasswordDaoException( "Error occured while checking the user account information " +  email);
+        throw new ForgotPasswordDaoException( String.format("User information not available in the database"));
+    } catch(Exception e) {
+			  logger.error(e.getLocalizedMessage(),e);
+			  throw new ForgotPasswordDaoException( "Error occured while checking the user account information " +  email);
 		}
 
 		return message;
