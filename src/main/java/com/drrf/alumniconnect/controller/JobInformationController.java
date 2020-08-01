@@ -38,11 +38,11 @@ public class JobInformationController {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response getJobsForStudent(@PathParam(value = "student_id")Long studentId) {
-		logger.info("Received request for Jobs by aspirant: "+ studentId);
+		logger.info(String.format("Received request for Jobs by aspirant: {0} ", studentId));
 		try {
 			return Response.ok().entity(JobInfoService.getJobs(studentId)).build();
 		} catch (Exception e) {	
-			logger.error("Error: "+e.getLocalizedMessage());
+			logger.error(String.format("Error: {0}",e.getLocalizedMessage()));
 			return Response.status(Status.BAD_REQUEST).entity("error in retrieving jobs").build();
 		}
 
@@ -68,9 +68,7 @@ public class JobInformationController {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response jobRequest(@RequestBody JobRequest job) { 
-		logger.info("Received a job application request\n"+"Job request details: \n"+
-		"Job_ID: "+job.getJobId()+"\n"+"Student_id: "+job.getStudentId()+"\n"+
-		"Student_Name: "+job.getStudentName()+"\nStudent_Email: "+job.getStudentEmail());
+		logger.info(String.format("Received a job application request: {0}", job));
 		try {
 			String resMessage = JobReqService.sendJobRequest(job);
 			if (resMessage.equals("Sending Job Request Failed") ){
@@ -105,8 +103,7 @@ public class JobInformationController {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response deleteJobEntry(@RequestBody JobRequest jobInfo) { 
-		logger.info("Received a delete request\n"+
-		"Job_ID: "+jobInfo.getJobId());
+		logger.info(String.format("Received a delete request Job_ID: " , jobInfo.getJobId()));
 		try {
 			return Response.ok().entity(JobInfoService.deleteJobEntry(jobInfo)).build();
 		} catch (JobInformationDaoException e) {

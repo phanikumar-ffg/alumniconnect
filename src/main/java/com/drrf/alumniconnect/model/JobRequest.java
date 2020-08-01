@@ -51,5 +51,12 @@ public class JobRequest {
 	public void setJobRole(String jobRole) {
 		this.jobRole = jobRole;
 	}
+	@Override
+	public String toString() {
+		return "JobRequest [studentId=" + studentId + ", studentEmail=" + studentEmail + ", studentName=" + studentName
+				+ ", jobId=" + jobId + ", jobRole=" + jobRole + ", jobCompanyName=" + jobCompanyName
+				+ ", jobDescription=" + jobDescription + "]";
+	}
 
+	
 }

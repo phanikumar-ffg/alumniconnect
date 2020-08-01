@@ -39,7 +39,7 @@ public class ProfileInformationController {
         try {
             return Response.ok().entity(profileInformationService.getProfileInfo(input)).build();
         } catch (Exception e) {
-            return Response.status(Status.BAD_REQUEST).entity("error").build();
+            return Response.status(Status.BAD_REQUEST).entity("getProfileInfoError").build();
         }
 
     }
@@ -53,7 +53,7 @@ public class ProfileInformationController {
         try {
             return Response.ok().entity(profileInformationService.requestCertificate(certificateRequestObject)).build();
         } catch (Exception e) {
-            return Response.status(Status.BAD_REQUEST).entity("error").build();
+            return Response.status(Status.BAD_REQUEST).entity("requestCertificateError").build();
         }
     }
 
@@ -65,7 +65,7 @@ public class ProfileInformationController {
         try {
             return Response.ok().entity(profileInformationService.saveProfileDetails(userProfile)).build();
         } catch (Exception e) {
-            return Response.status(Status.BAD_REQUEST).entity("error").build();
+            return Response.status(Status.BAD_REQUEST).entity("updateProfileError").build();
         }
     }
 
@@ -78,7 +78,7 @@ public class ProfileInformationController {
         try {
             return Response.ok().entity(profileInformationService.updatePassword(newPassword)).build();
         } catch (Exception e) {
-            return Response.status(Status.BAD_REQUEST).entity("error").build();
+            return Response.status(Status.BAD_REQUEST).entity("updatePasswordError").build();
         }
     }
 }

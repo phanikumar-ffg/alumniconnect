@@ -45,7 +45,7 @@ public class RegistrationDaoImpl implements RegistrationDao{
     }
     @Override
     public UserProfile newUserRegistration(UserProfile userProfile) throws RegistrationDaoException {
-        UserProfile userProfile1 = null;
+        UserProfile userProfile1;
         LoginDetails loginDetails;
         final String check_profile_details = "select * from tbl_profile_data pd inner join tbl_centre_details cd on (pd.centre_id= cd.centre_id) inner join tbl_city_details ctd on (pd.city_id = ctd.city_id) inner join tbl_state_details tsd on(ctd.STATE_ID=tsd.STATE_ID) \r\n" +
                 "where (pd.aspirant_id=? and pd.email_id=?) or (pd.aspirant_id=? and pd.phone=?) or (pd.email_id=? and pd.phone=?)";
@@ -96,7 +96,7 @@ public class RegistrationDaoImpl implements RegistrationDao{
         }
         catch (Exception e1){
             logger.error(e1.getLocalizedMessage(),e1);
-            throw new RegistrationDaoException("Error occured while checking profile details user:"+userProfile1.getAspirantId()+"."+e1.getLocalizedMessage());
+            throw new RegistrationDaoException("Error occured while checking profile details user:"+userProfile.getAspirantId()+"."+e1.getLocalizedMessage());
         }
     }
 

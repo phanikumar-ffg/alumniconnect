@@ -23,9 +23,9 @@ public class CityDetailsDaoImpl implements CityDetailsDao {
     public List<CityDetails> getCityDetails(Long stateId) throws CityDetailsDaoException {
         List<CityDetails> list=null;
         try {
-            final String sql = "SELECT * FROM alumniconnect.tbl_city_details where STATE_ID="+stateId;
+            final String sql = "SELECT * FROM alumniconnect.tbl_city_details where STATE_ID= ?";
 
-           list = jdbcTemplate.query(sql,  new CityDetailsRowMapper());
+           list = jdbcTemplate.query(sql,new Object[]{stateId},  new CityDetailsRowMapper());
             if(list.isEmpty()){
                 throw  new CityDetailsDaoException("City Details not found");
             }

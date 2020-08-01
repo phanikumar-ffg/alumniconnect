@@ -1,5 +1,6 @@
 package com.drrf.alumniconnect.controller;
 
+import com.drrf.alumniconnect.exceptions.ContentNotFoundDaoException;
 import com.drrf.alumniconnect.model.ContentManagement;
 import com.drrf.alumniconnect.service.ContentManagementService;
 import com.drrf.alumniconnect.service.ContentRequestService;
@@ -51,11 +52,11 @@ public class ContentManagementController {
         logger.info("Received a content Management request");
         try {
             String responseMessage = contentRequestService.sendContentRequest(content);
-            if(responseMessage == "Request saved to database successfully") {
+            if("Request saved to database successfully".equalsIgnoreCase(responseMessage)) {
                 return Response.ok().entity(responseMessage).build();
             }
             else
-                throw new Exception(responseMessage);
+                throw new ContentNotFoundDaoException(responseMessage);
         } catch (Exception e) {
             JsonObject error=new JsonObject();
             error.addProperty(APIUtils.ERROR_MESSAGE, e.getLocalizedMessage());
@@ -70,11 +71,11 @@ public class ContentManagementController {
         logger.info("Deleting content Management request");
         try {
             String responseMessage = deleteContentService.deleteContentRequest (content);
-            if(responseMessage == "Request deleted from database successfully") {
+            if("Request deleted from database successfully".equalsIgnoreCase(responseMessage)) {
                 return Response.ok().entity(responseMessage).build();
             }
             else
-                throw new Exception(responseMessage);
+                throw new ContentNotFoundDaoException(responseMessage);
         } catch (Exception e) {
             JsonObject error=new JsonObject();
             error.addProperty(APIUtils.ERROR_MESSAGE, e.getLocalizedMessage());
