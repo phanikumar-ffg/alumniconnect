@@ -21,6 +21,7 @@ public class JerseyConfig extends ResourceConfig {
         register(CityDetailsController.class);
 		register(AdminHelpController.class);
 		register(ProfileInformationController.class);
+		register(SendNotificationController.class);
 
 	}
 
