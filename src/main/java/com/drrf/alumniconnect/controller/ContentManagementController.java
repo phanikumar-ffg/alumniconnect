@@ -7,6 +7,7 @@ import com.drrf.alumniconnect.model.ContentManagement;
 import com.drrf.alumniconnect.service.ContentManagementService;
 import com.drrf.alumniconnect.service.ContentRequestService;
 import com.drrf.alumniconnect.service.DeleteContentService;
+import com.drrf.alumniconnect.service.IncrementViewsService;
 import com.drrf.alumniconnect.utils.APIUtils;
 import com.google.gson.JsonObject;
 import org.slf4j.Logger;
@@ -30,6 +31,9 @@ public class ContentManagementController {
 
     @Autowired
     private DeleteContentService deleteContentService;
+
+    @Autowired
+    private  IncrementViewsService incrementViewsService;
 
     @GET
     @Path("/content/details")
@@ -75,6 +79,27 @@ public class ContentManagementController {
         try {
             String responseMessage = deleteContentService.deleteContentRequest (content);
             if("Request deleted from database successfully".equalsIgnoreCase(responseMessage)) {
+                return Response.ok().entity(responseMessage).build();
+            }
+            else
+                throw new ContentNotFoundDaoException(responseMessage);
+        } catch (Exception e) {
+            JsonObject error=new JsonObject();
+            error.addProperty(APIUtils.ERROR_MESSAGE, e.getLocalizedMessage());
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(error.toString()).build();
+        }
+
+    }
+
+    @POST
+    @Path("/content/incrementViews")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response contentIncrementViews(@RequestBody ContentManagement content) {
+        logger.info("Incrementing views for the content");
+        try {
+            String responseMessage = incrementViewsService.IncrementViewRequest(content);
+            if("Success".equalsIgnoreCase(responseMessage)) {
                 return Response.ok().entity(responseMessage).build();
             }
             else
