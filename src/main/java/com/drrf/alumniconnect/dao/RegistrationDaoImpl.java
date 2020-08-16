@@ -6,8 +6,14 @@ import com.drrf.alumniconnect.jdbcmapper.CentreDetailsRowMapper;
 import com.drrf.alumniconnect.jdbcmapper.LoginDetailsRowMapper;
 import com.drrf.alumniconnect.jdbcmapper.UserProfileRowMapper;
 import com.drrf.alumniconnect.model.*;
-import com.drrf.alumniconnect.service.MailService;
 import com.drrf.alumniconnect.utils.APIUtils;
+import com.sendgrid.Method;
+import com.sendgrid.Request;
+import com.sendgrid.Response;
+import com.sendgrid.SendGrid;
+import com.sendgrid.helpers.mail.Mail;
+import com.sendgrid.helpers.mail.objects.Content;
+import com.sendgrid.helpers.mail.objects.Email;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,12 +81,27 @@ public class RegistrationDaoImpl implements RegistrationDao{
                         + "Login Id - " + userProfile1.getEmailId() +
                         "\nPwd - " + pass + "\n\nRegards\nTeam DRF Grow\n";
                 logger.info("Account created for user " + userProfile1.getEmailId());
-                Mail mail = new Mail();
+                Email from = new Email(APIUtils.MAIL_FROM);
+                String subject = APIUtils.MAIL_NEW_USR_SUB;
+                Email to = new Email(userProfile1.getEmailId());
+                Content content = new Content("text/plain", emailBody);
+                Mail mail = new Mail(from, subject, to, content);
+
+                SendGrid sg = new SendGrid(APIUtils.SENDGRID_API_KEY);
+                Request request = new Request();
+                request.setMethod(Method.POST);
+                request.setEndpoint("mail/send");
+                request.setBody(mail.build());
+                Response response = sg.api(request);
+                logger.info(String.valueOf(response.getStatusCode()));
+                logger.info(response.getBody());
+                logger.info(String.valueOf(response.getHeaders()));
+                /*Mail mail = new Mail();
                 mail.setMailFrom(APIUtils.MAIL_FROM);
-                mail.setMailTo(userProfile1.getEmailId()/*APIUtils.MAIL_TO*/);
+                mail.setMailTo(userProfile1.getEmailId()*//*APIUtils.MAIL_TO*//*);
                 mail.setMailSubject(APIUtils.MAIL_NEW_USR_SUB);
                 mail.setMailContent(emailBody);
-                mailService.sendEmail(mail);
+                mailService.sendEmail(mail);*/
                 logger.info("User Account created Successfully!!Details sent to registered mail " + userProfile1.getEmailId());
                 return userProfile1;
             }
