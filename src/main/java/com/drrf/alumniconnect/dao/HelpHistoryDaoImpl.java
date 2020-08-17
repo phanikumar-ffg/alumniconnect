@@ -7,6 +7,13 @@ import com.drrf.alumniconnect.jdbcmapper.UserNameRowMapper;
 import com.drrf.alumniconnect.model.*;
 import com.drrf.alumniconnect.service.MailService;
 import com.drrf.alumniconnect.utils.APIUtils;
+import com.sendgrid.Method;
+import com.sendgrid.Request;
+import com.sendgrid.Response;
+import com.sendgrid.SendGrid;
+import com.sendgrid.helpers.mail.Mail;
+import com.sendgrid.helpers.mail.objects.Content;
+import com.sendgrid.helpers.mail.objects.Email;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +35,7 @@ public class HelpHistoryDaoImpl implements HelpHistoryDao {
     public String saveHelpDetails(HelpHistory helpHistory) throws HelpHistoryDaoException {
        // List<UserName> userProfile1 = null;
         UserName userProfile1 = new UserName();
+        LoginDetails loginDetails = null;
         try {
             java.util.Date date=new java.util.Date();
             Timestamp sqlTime=new Timestamp(date.getTime());
@@ -69,12 +77,29 @@ public class HelpHistoryDaoImpl implements HelpHistoryDao {
             } else {
                String emailBody = "Dear Admin,\n\n A help request has been initialized by"+userProfile1.getFirstName()+userProfile1.getLastName()+" (Aspirant Id-" + + helpHistory.getAspirantId() + ") and the details of the request are as follows: \n\n Problem Type-" + helpHistory.getReason() + "\n Problem Description-" + helpHistory.getDetails() + "\n Additional Details-" + helpHistory.getDescription() + "\n \n Regards,\n Team Dr Reddy Foundation";
 
-                Mail mail = new Mail();
+              /*  Mail mail = new Mail();
                 mail.setMailFrom(APIUtils.MAIL_FROM);
                 mail.setMailTo(APIUtils.MAIL_TO);
                 mail.setMailSubject(APIUtils.MAIL_HELP_REQUEST);
                 mail.setMailContent(emailBody);
-                mailService.sendEmail(mail);
+                mailService.sendEmail(mail);*/
+
+                Email from = new Email(APIUtils.MAIL_FROM);
+                String subject = APIUtils.MAIL_HELP_REQUEST;
+                Email to = new Email(APIUtils.MAIL_TO);
+                Content content = new Content("text/plain", emailBody);
+                Mail mail = new Mail(from, subject, to, content);
+
+                SendGrid sg = new SendGrid(APIUtils.SENDGRID_API_KEY);
+                Request request = new Request();
+                request.setMethod(Method.POST);
+                request.setEndpoint("mail/send");
+                request.setBody(mail.build());
+                Response response = sg.api(request);
+                logger.info(String.valueOf(response.getStatusCode()));
+                logger.info(response.getBody());
+                logger.info(String.valueOf(response.getHeaders()));
+                logger.info("mail sent");
                 logger.info("Details inserted successfully");
                 return "success";
             }
