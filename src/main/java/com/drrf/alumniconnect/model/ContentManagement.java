@@ -6,6 +6,7 @@ public class ContentManagement {
 
     private long contentId;
     private String contentURL;
+    private long contentViews;
     private String contentType;
     private String contentDesc;
     private String assessmentURL;
@@ -58,4 +59,9 @@ public class ContentManagement {
     public void setCreateDate(Timestamp createDate) {
         this.createDate = createDate;
     }
+
+    public long getContentViews() { return contentViews; }
+
+    public void setContentViews(long contentViews) {  this.contentViews = contentViews; }
+
 }
