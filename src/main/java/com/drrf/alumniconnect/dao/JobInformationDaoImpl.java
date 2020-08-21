@@ -22,6 +22,10 @@ public class JobInformationDaoImpl implements JobInformationDao{
 	private static final Logger logger = LoggerFactory.getLogger(JobInformationDao.class);
 	@Autowired
     private JdbcTemplate jdbcTemplate;
+	@Autowired
+	private ContentRequestDaoImpl contentRequestDao;
+	@Autowired
+	private SaveUserTokenDaoImpl saveUserTokenDao;
 
 	@Override
 	public List<JobInformation> getJobs(Long studentId) throws Exception{
@@ -62,6 +66,7 @@ public class JobInformationDaoImpl implements JobInformationDao{
 	}
 
 	public String saveJobEntryDetails(JobInformation jobInformation) throws JobInformationDaoException {
+		List<String> userTokenList = null;
 		try {
 			java.util.Date date=new java.util.Date();
 			Timestamp sqlTime=new Timestamp(date.getTime());
@@ -73,6 +78,13 @@ public class JobInformationDaoImpl implements JobInformationDao{
 			}
 			else {
 				logger.info("Details inserted successfully");
+				String title = "New Job Added!!!";
+				String body = "Click to apply for "+ jobInformation.getCompanyName()+" Company with Job Description: "+jobInformation.getJobDescription();
+				userTokenList = saveUserTokenDao.getAllUserToken();
+				logger.info( "Started: Push Notifications with Title {} and Body {} for {} clients .",title,body,userTokenList.size());
+				userTokenList.forEach((e) ->{
+					contentRequestDao.sendPushNotification(e,title,body);
+				});
 				return "success";
 			}
 		}
