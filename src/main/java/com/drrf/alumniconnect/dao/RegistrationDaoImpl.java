@@ -37,8 +37,8 @@ public class RegistrationDaoImpl implements RegistrationDao{
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    @Autowired
-    MailService mailService;
+    //@Autowired
+    //MailService mailService;
     private static final Random RANDOM = new SecureRandom();
     private static final String ALPHABET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
